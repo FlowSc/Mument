@@ -59,7 +59,14 @@ class MainViewController: UIViewController {
         
         collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
         
-        appleMusicCheck()
+        
+        if SKCloudServiceController.authorizationStatus() == .authorized {
+            API.getSongInfo(userToken: UserDefaults.standard.string(forKey: "MusicToken")!) { (result) in
+                print(result)
+            }
+        }else{
+            appleMusicCheck()
+        }
         
     }
     
@@ -74,7 +81,12 @@ class MainViewController: UIViewController {
             
             serviceCon.requestUserToken(forDeveloperToken: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkEzUUxZRFhRWTYifQ.eyJpYXQiOjE1NTI5NzM1MTEsImV4cCI6MTU2ODUyNTUxMSwiaXNzIjoiUzM2SlZHRjM3OCJ9.ctz7UBkr7mvrP0TrW9VuHuA10oPvwMIQGlMtjjv_Hs9JYw8yGMxWPNDvyEQSrREj3Vqv33Qx6Ykx-0QOegqCVA") { (token, err) in
               
-                API.getSongInfo(userToken: token!)
+                
+                UserDefaults.standard.set(token, forKey: "MusicToken")
+                
+                API.getSongInfo(userToken: token!, completion: { (result) in
+                    print(result)
+                })
                 
             }
         }

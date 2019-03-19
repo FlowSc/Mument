@@ -22,7 +22,7 @@ struct API {
         header["Music-User-Token"] = userToken
         print(header, "HEARER")
         
-        Alamofire.request("https://api.music.apple.com/v1/me/recent/played", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in            
+        Alamofire.request("https://api.music.apple.com/v1/me/recent/played", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
             switch response.result {
                 
             case .success(let value):
