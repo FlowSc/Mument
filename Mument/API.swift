@@ -16,7 +16,7 @@ struct API {
     static let appleMusicToken = "Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkEzUUxZRFhRWTYifQ.eyJpYXQiOjE1NTI5NzM1MTEsImV4cCI6MTU2ODUyNTUxMSwiaXNzIjoiUzM2SlZHRjM3OCJ9.ctz7UBkr7mvrP0TrW9VuHuA10oPvwMIQGlMtjjv_Hs9JYw8yGMxWPNDvyEQSrREj3Vqv33Qx6Ykx-0QOegqCVA"
     static var header = ["Content-Type":"application/json", "Authorization":appleMusicToken]
 
-    static func getSongInfo(userToken:String, completion:((Any)->())?) {
+    static func getRecentPlayed(userToken:String, completion:((Any)->())?) {
 //
         
         header["Music-User-Token"] = userToken

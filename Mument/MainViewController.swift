@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
         
         
         if SKCloudServiceController.authorizationStatus() == .authorized {
-            API.getSongInfo(userToken: UserDefaults.standard.string(forKey: "MusicToken")!) { (result) in
+            API.getRecentPlayed(userToken: UserDefaults.standard.string(forKey: "MusicToken")!) { (result) in
                 print(result)
             }
         }else{
@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
                 
                 UserDefaults.standard.set(token, forKey: "MusicToken")
                 
-                API.getSongInfo(userToken: token!, completion: { (result) in
+                API.getRecentPlayed(userToken: token!, completion: { (result) in
                     print(result)
                 })
                 
@@ -118,6 +118,12 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+        
+        let vc = DiaryViewController()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        
     }
 }
 
