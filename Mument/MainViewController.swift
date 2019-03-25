@@ -57,43 +57,8 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
         
-        collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-        
-        
-        if SKCloudServiceController.authorizationStatus() == .authorized {
-            API.getRecentPlayed(userToken: UserDefaults.standard.string(forKey: "MusicToken")!) { (result) in
-                print(result)
-            }
-        }else{
-            appleMusicCheck()
-        }
-        
+        collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)        
     }
-    
-    
-    func appleMusicCheck() {
-        
-        let serviceCon = SKCloudServiceController()
-        
-  
-        SKCloudServiceController.requestAuthorization { (status) in
-            print(status)
-            
-            serviceCon.requestUserToken(forDeveloperToken: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkEzUUxZRFhRWTYifQ.eyJpYXQiOjE1NTI5NzM1MTEsImV4cCI6MTU2ODUyNTUxMSwiaXNzIjoiUzM2SlZHRjM3OCJ9.ctz7UBkr7mvrP0TrW9VuHuA10oPvwMIQGlMtjjv_Hs9JYw8yGMxWPNDvyEQSrREj3Vqv33Qx6Ykx-0QOegqCVA") { (token, err) in
-              
-                
-                UserDefaults.standard.set(token, forKey: "MusicToken")
-                
-                API.getRecentPlayed(userToken: token!, completion: { (result) in
-                    print(result)
-                })
-                
-            }
-        }
-        
-        
-    }
-    
 
 }
 

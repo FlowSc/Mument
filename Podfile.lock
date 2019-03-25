@@ -53,6 +53,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - ObjectMapper (3.4.2)
   - SnapKit (4.2.0)
   - SwiftyJSON (4.2.0)
 
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - Cider (~> 0.10)
   - Firebase
   - Kingfisher
+  - ObjectMapper
   - SnapKit
   - SwiftyJSON
 
@@ -76,6 +78,7 @@ SPEC REPOS:
     - GoogleUtilities
     - Kingfisher
     - nanopb
+    - ObjectMapper
     - SnapKit
     - SwiftyJSON
 
@@ -90,9 +93,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 13e61d52977c8d58e6323e69b81c1d3c9605079e
+PODFILE CHECKSUM: 4a2037edb459a13d116d9dfa9f28ccdb4ef553c5
 
 COCOAPODS: 1.6.0.beta.2

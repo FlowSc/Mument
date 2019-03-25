@@ -19,6 +19,7 @@ class DiaryViewController: UIViewController {
     let musicPlayerView = MusicPlayerView()
     let backBtn = UIButton()
     let keyboardResigner = UITapGestureRecognizer()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class DiaryViewController: UIViewController {
         }
         backBtn.backgroundColor = .red
         dateLb.snp.makeConstraints { (make) in
-            make.top.equalTo(50)
+            make.centerY.equalTo(backBtn.snp.centerY)
             make.centerX.equalToSuperview()
         }
         musicPlayerView.addGestureRecognizer(keyboardResigner)
@@ -128,6 +129,10 @@ class DiaryViewController: UIViewController {
 extension DiaryViewController:MusicPlayerViewDelegate {
     func addMusic() {
         print("AddMusic")
+        
+        let selectedVc = UINavigationController.init(rootViewController: MusicSelectViewController())
+        
+        self.present(selectedVc, animated: true, completion: nil)
     }
     
     func play() {
