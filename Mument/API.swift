@@ -47,5 +47,16 @@ struct API {
         
     }
     
+    static func getMusicsFromPlaylist(userToken:String, playListId:String, completion:((Any)->())?) {
+        
+        header["Music-User-Token"] = userToken
+
+        
+//        Alamofire.request("https://api.music.apple.com/v1/catalog/{storefront}/playlists/\(playListId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+//            <#code#>
+//        }
+        
+    }
+    
     
 }
