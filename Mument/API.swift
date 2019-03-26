@@ -47,16 +47,40 @@ struct API {
         
     }
     
-    static func getMusicsFromPlaylist(userToken:String, playListId:String, completion:((Any)->())?) {
+    static func getMusicsFromPlaylist(userToken:String, storefront:String, type:String, id:String, completion:(([Song]?)->())?) {
         
         header["Music-User-Token"] = userToken
 
         
-//        Alamofire.request("https://api.music.apple.com/v1/catalog/{storefront}/playlists/\(playListId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
-//            <#code#>
-//        }
+        Alamofire.request("https://api.music.apple.com/v1/catalog/\(storefront)/\(type)/\(id)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            
+            switch response.result {
+            
+            case .success(let value):
+                
+                let json = JSON(value)
+                let results = json["data"][0]["relationships"]["tracks"]["data"].arrayValue
+                
+//                print("RESULT~")
+//                print(results)
+//                
+
+                let mapped = results.map({Mapper<Song>().map(JSONString: $0.description)!})
+                
+                completion!(mapped)
+
+//
+//                completion!(value)
+//
+            case .failure(let err):
+                completion!(nil)
+            
+            }
+            
+        }
         
     }
+    
     
     
 }

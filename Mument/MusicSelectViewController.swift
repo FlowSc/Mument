@@ -138,6 +138,29 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath)
+        
+       
+
+        if let playlist = recentedPlaylists {
+            
+            print(playlist[indexPath.row].type, "TYPE")
+            
+            API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
+                
+                let mvc = MusicDetailViewController()
+                
+                if let _songs = result {
+                    mvc.setData(_songs)
+                    self.navigationController?.pushViewController(mvc, animated: true)
+                }else{
+                    print("No result")
+                }
+               
+            }
+        }
+        
+
+        
     }
     
 }

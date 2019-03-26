@@ -24,14 +24,13 @@ class Playlist:Mappable {
     func mapping(map: Map) {
         self.thumnailUrl <- map["attributes.artwork.url"]
         self.playId <- map["id"]
-        
+        self.type <- map["type"]
         self.thumnailUrl = convertThumnailUrl(url: thumnailUrl)
     }
     
     func convertThumnailUrl(url:String) -> String {
         
         return url.replacingOccurrences(of: "{w}", with: "640").replacingOccurrences(of: "{h}", with: "640")
-//        return url.replace
     }
     
     
@@ -41,9 +40,35 @@ class Playlist:Mappable {
     
 }
 
-
-enum PlayListType:String {
+class Song:Mappable {
     
-    case playlist, album, single
+    var artistName:String = ""
+    var title:String = ""
+    var url:String = ""
+    var type:String = ""
+    var artworkUrl:String = ""
+    var id:String = ""
+    var albumName:String = ""
+    
+    func mapping(map: Map) {
+        
+        artistName <- map["artistName"]
+        albumName <- map["albumName"]
+        title <- map["name"]
+        url <- map["url"]
+        artworkUrl <- map["artwork.url"]
+        self.artworkUrl = convertThumnailUrl(url: artworkUrl)
+        id <- map["id"]
+
+    }
+    
+    func convertThumnailUrl(url:String) -> String {
+        
+        return url.replacingOccurrences(of: "{w}", with: "640").replacingOccurrences(of: "{h}", with: "640")
+    }
+    
+    required convenience init?(map: Map) {
+        self.init()
+    }
     
 }

@@ -129,8 +129,8 @@ class DiaryViewController: UIViewController {
 extension DiaryViewController:MusicPlayerViewDelegate {
     func addMusic() {
         print("AddMusic")
-        
-        let selectedVc = UINavigationController.init(rootViewController: MusicSelectViewController())
+        let msvc = MusicSelectViewController()
+        let selectedVc = UINavigationController.init(rootViewController: msvc)
         
         self.present(selectedVc, animated: true, completion: nil)
     }
