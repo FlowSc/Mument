@@ -81,6 +81,9 @@ class MusicSelectViewController: UIViewController {
             make.bottom.equalTo(view.safeArea.bottom)
         }
         
+//        searchBar.backgroundColor = .white
+        searchBar.barTintColor = .white
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
