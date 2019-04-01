@@ -20,9 +20,13 @@ class Playlist:Mappable {
     var playUrl:String = ""
     var curatorName:String = ""
     var artistName:String = ""
+    var name:String = ""
     
     func mapping(map: Map) {
         self.thumnailUrl <- map["attributes.artwork.url"]
+        self.name <- map["attributes.name"]
+        self.curatorName <- map["attributes.curatorName"]
+        self.artistName <- map["attributes.artistName"]
         self.playId <- map["id"]
         self.type <- map["type"]
         self.thumnailUrl = convertThumnailUrl(url: thumnailUrl)

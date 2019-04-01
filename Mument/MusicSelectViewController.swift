@@ -210,8 +210,15 @@ final class PlaylistCollectionViewCell:UICollectionViewCell {
     func setData(playList:Playlist) {
         
         self.thumnailImv.kf.setImage(with: URL.init(string: playList.thumnailUrl)!)
-        self.nameLb.text = "이름"
-        self.titleLb.text = "제목"
+        
+        if playList.curatorName == "" {
+            self.nameLb.text = playList.artistName
+
+        }else{
+            self.nameLb.text = playList.curatorName
+
+        }
+        self.titleLb.text = playList.name
 //        self.thumnailImv.
         
     }
