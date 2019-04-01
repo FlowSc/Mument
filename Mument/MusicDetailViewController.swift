@@ -52,8 +52,9 @@ class MusicDetailViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: "MusicTableViewCell")
         backButton.addTarget(self, action: #selector(backBtnTouched(sender:)), for: .touchUpInside)
+        tableView.reloadData()
     }
     
     func setData(_ songs:[Song]) {
@@ -76,13 +77,27 @@ extension MusicDetailViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
-        cell.backgroundColor = .red
-        
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicTableViewCell", for: indexPath) as! MusicTableViewCell
+
+        if let songs = songs {
+            cell.setData(songs[indexPath.row])
+            
+            return cell
+        }else{
+            return UITableViewCell()
+        }
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let songs = songs {
+            
+            let selected = songs[indexPath.row]
+            
+            print(selected.url)
+            
+        }
+        
+    }
     
 }

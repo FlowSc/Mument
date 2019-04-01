@@ -60,19 +60,15 @@ struct API {
                 
                 let json = JSON(value)
                 let results = json["data"][0]["relationships"]["tracks"]["data"].arrayValue
-                
-//                print("RESULT~")
-//                print(results)
-//                
+
+//
 
                 let mapped = results.map({Mapper<Song>().map(JSONString: $0.description)!})
                 
                 completion!(mapped)
 
 //
-//                completion!(value)
-//
-            case .failure(let err):
+            case .failure(let _):
                 completion!(nil)
             
             }

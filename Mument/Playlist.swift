@@ -52,11 +52,11 @@ class Song:Mappable {
     
     func mapping(map: Map) {
         
-        artistName <- map["artistName"]
-        albumName <- map["albumName"]
-        title <- map["name"]
-        url <- map["url"]
-        artworkUrl <- map["artwork.url"]
+        artistName <- map["attributes.artistName"]
+        albumName <- map["attributes.albumName"]
+        title <- map["attributes.name"]
+        url <- map["attributes.url"]
+        artworkUrl <- map["attributes.artwork.url"]
         self.artworkUrl = convertThumnailUrl(url: artworkUrl)
         id <- map["id"]
 
