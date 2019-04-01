@@ -29,16 +29,15 @@ class MusicSelectViewController: UIViewController {
         
         if SKCloudServiceController.authorizationStatus() == .authorized {
             API.getRecentPlayed(userToken: UserDefaults.standard.string(forKey: "MusicToken")!) { (result) in
-                
                 self.recentedPlaylists = result
-            
-                print(result?.map({$0.thumnailUrl}))
-                
             }
         }else{
             appleMusicCheck()
         }
     }
+    
+
+    
     
     private func setUI() {
         self.view.backgroundColor = .white
@@ -81,7 +80,6 @@ class MusicSelectViewController: UIViewController {
             make.bottom.equalTo(view.safeArea.bottom)
         }
         
-//        searchBar.backgroundColor = .white
         searchBar.barTintColor = .white
         
         collectionView.delegate = self
@@ -151,6 +149,7 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
             API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
                 
                 let mvc = MusicDetailViewController()
+                
                 
                 if let _songs = result {
                     mvc.setData(_songs)

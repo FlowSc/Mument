@@ -10,6 +10,7 @@ import UIKit
 
 class DiaryViewController: UIViewController {
     
+    var selectedSong:Song?
     var selectedDateText:String = ""
     let verticalScrollView = BaseVerticalScrollView()
     var isEditable:Bool = false
@@ -28,10 +29,18 @@ class DiaryViewController: UIViewController {
         setNotifications()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("VIEWWILLAPEAR")
+    }
+    
     func setNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardBegin(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardResign(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setSelectedSong(noti:)), name: NSNotification.Name.init("setSelectedSong"), object: nil)
         
     }
     
@@ -123,16 +132,28 @@ class DiaryViewController: UIViewController {
             }
         }
     }
+    
+    @objc func setSelectedSong(noti:Notification) {
+        if let selected = noti.userInfo?["selected"] as? Song {
+            self.selectedSong = selected
+            print(selected.title)
+        }
+    }
 
 }
 
 extension DiaryViewController:MusicPlayerViewDelegate {
+
+    
     func addMusic() {
         print("AddMusic")
         let msvc = MusicSelectViewController()
+        
         let selectedVc = UINavigationController.init(rootViewController: msvc)
         
-        self.present(selectedVc, animated: true, completion: nil)
+            self.present(selectedVc, animated: true, completion: nil)
+
+    
     }
     
     func play() {

@@ -11,10 +11,14 @@ import UIKit
 class MusicDetailViewController: UIViewController {
     
     let tableView = UITableView()
-    var songs:[Song]?
+    var songs:[Song]? {
+        didSet {
+            print("Song allocated!")
+        }
+    }
     let backButton = UIButton()
     let titleLb = UILabel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,6 +99,12 @@ extension MusicDetailViewController:UITableViewDelegate, UITableViewDataSource {
             let selected = songs[indexPath.row]
             
             print(selected.url)
+            
+            NotificationCenter.default.post(name: NSNotification.Name.init("setSelectedSong"), object: nil, userInfo: ["selected":selected])
+            
+
+            self.dismiss(animated: true, completion: nil)
+            
             
         }
         
