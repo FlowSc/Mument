@@ -23,7 +23,7 @@ class CalendarViewController: UIViewController {
         monthCollectionView.delegate = self
         monthCollectionView.tag = 0
         monthCollectionView.dataSource = self
-        monthCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        monthCollectionView.register(MonthCollectionViewCell.self, forCellWithReuseIdentifier: "MonthCollectionViewCell")
         // Do any additional setup after loading the view.
     }
     
@@ -63,10 +63,10 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MonthCollectionViewCell", for: indexPath) as! MonthCollectionViewCell
         
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.blue.cgColor
+        cell.setMonth(indexPath.row + 1)
+  
         
         return cell
     }
@@ -89,5 +89,35 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
         
     }
     
+    
+}
+
+class MonthCollectionViewCell:UICollectionViewCell {
+    
+    private let lbl = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setUI()
+    }
+    
+    private func setUI() {
+        self.addSubview(lbl)
+        lbl.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        lbl.textColor = .black
+        lbl.textAlignment = .center
+        
+        self.setBorder(color: .black, width: 0.5, cornerRadius: 5)
+    }
+    
+    func setMonth(_ month:Int) {
+        self.lbl.text = "\(month)월"
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
 }

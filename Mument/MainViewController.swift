@@ -63,6 +63,7 @@ class MainViewController: UIViewController {
             }
             dateLb.text = "\(selectedYear)년 \(selectedMonth)월"
             backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
+            backBtn.backgroundColor = .red
             monthlyDiaries.removeAll()
             
             for i in 1...monthLength! {
@@ -148,15 +149,15 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
   
         if fromCalendar {
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: cellItem.song!.artworkUrl)
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
             }else{
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: "")
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: "")
             }
         }else{
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(calendar.year!)\((calendar.month!).addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: cellItem.song!.artworkUrl)
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
             }else{
-                  cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: "")
+                  cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: "")
             }
         }
         return cell
