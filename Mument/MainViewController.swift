@@ -12,6 +12,7 @@ import StoreKit
 import MediaPlayer
 
 
+let DEVICEWINDOW = UIWindow().frame
 
 
 class MainViewController: UIViewController {
@@ -92,7 +93,14 @@ class MainViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 500)
+        
+        if DEVICEWINDOW.height < 600 {
+            layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 380)
+        }else{
+            layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 500)
+
+        }
+        
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)
         layout.scrollDirection = .horizontal
         

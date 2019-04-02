@@ -72,7 +72,14 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize.init(width: 100, height: 100)
+        
+        if DEVICEWINDOW.height < 600 {
+            return CGSize.init(width: 80, height: 80)
+
+        }else{
+            return CGSize.init(width: 100, height: 100)
+
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

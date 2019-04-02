@@ -120,9 +120,6 @@ class MusicSelectViewController: UIViewController {
                         self.recentedPlaylists = result
                     })
                 }
-                
-
-                
             }
         }
         
@@ -148,10 +145,7 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
         
-       
-
         if let playlist = recentedPlaylists {
             
             print(playlist[indexPath.row].type, "TYPE")
