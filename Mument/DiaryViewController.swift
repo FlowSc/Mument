@@ -10,7 +10,14 @@ import UIKit
 
 class DiaryViewController: UIViewController {
     
-    var selectedSong:Song?
+    var selectedSong:Song? {
+        didSet {
+            if let _selected = selectedSong {
+                print("SONGS HERE!")
+                musicPlayerView.setMusicPlayer(song: _selected)
+            }
+        }
+    }
     var selectedDateText:String = ""
     let verticalScrollView = BaseVerticalScrollView()
     var isEditable:Bool = false
@@ -32,7 +39,6 @@ class DiaryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("VIEWWILLAPEAR")
     }
     
     func setNotifications() {
@@ -136,13 +142,16 @@ class DiaryViewController: UIViewController {
     @objc func setSelectedSong(noti:Notification) {
         if let selected = noti.userInfo?["selected"] as? Song {
             self.selectedSong = selected
-            print(selected.title)
         }
     }
 
 }
 
 extension DiaryViewController:MusicPlayerViewDelegate {
+    func play(isSelected: Bool) {
+        print(isSelected)
+    }
+    
 
     
     func addMusic() {
@@ -156,9 +165,7 @@ extension DiaryViewController:MusicPlayerViewDelegate {
     
     }
     
-    func play() {
-        print("PlayMusic")
-    }
+
     
     func pause() {
         print("PauseMusic")
@@ -203,11 +210,50 @@ class MusicPlayerView:UIView {
         
     }
     
+    func setMusicPlayer(song:Song) {
+        
+        firstAddBtn.removeFromSuperview()
+        firstAddInfoLb.removeFromSuperview()
+        
+        self.addSubview([thumnailImv, playBtn, pauseBtn, repeatModeBtn])
+        
+        thumnailImv.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(100)
+        }
+        
+        playBtn.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(thumnailImv.snp.bottom).offset(10)
+            make.width.height.equalTo(50)
+        }
+        
+        repeatModeBtn.snp.makeConstraints { (make) in
+            make.trailing.equalTo(playBtn.snp.leading).offset(-20)
+            make.width.height.equalToSuperview()
+            make.top.equalTo(thumnailImv.snp.bottom).offset(10)
+        }
+        repeatModeBtn.snp.makeConstraints { (make) in
+            make.leading.equalTo(playBtn.snp.trailing).offset(20)
+            make.width.height.equalToSuperview()
+            make.top.equalTo(thumnailImv.snp.bottom).offset(10)
+        }
+        
+        repeatModeBtn.addTarget(self, action: #selector(selectRepeatMode(sender:)), for: .touchUpInside)
+        playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
+        
+        thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
+//        pauseBtn.addTarget(self, action: #selector(), for: <#T##UIControl.Event#>)
+
+        
+    }
+    
     @objc func addMusicTouched(sender:UIButton) {
         delegate?.addMusic()
     }
     @objc func playMusic(sender:UIButton) {
-        delegate?.play()
+        sender.isSelected = !(sender.isSelected)
+        delegate?.play(isSelected: sender.isSelected)
     }
     @objc func pauseMusic(sender:UIButton) {
         delegate?.pause()
@@ -225,7 +271,7 @@ class MusicPlayerView:UIView {
 protocol MusicPlayerViewDelegate {
     
     func addMusic()
-    func play()
+    func play(isSelected:Bool)
     func pause()
     func repeatModeSelect()
     
