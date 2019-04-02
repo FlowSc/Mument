@@ -20,15 +20,10 @@ class MainViewController: UIViewController {
     let currentDate = Date()
     let dateLb = UILabel()
     var collectionView:UICollectionView!
-    var monthLength:Int? {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
+    var monthLength:Int?
     var selectedMonth:Int = 0
     var selectedYear:Int = 0
-    
+    let backBtn = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +33,20 @@ class MainViewController: UIViewController {
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
             monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
+        }else{
+            self.view.addSubview(backBtn)
+            backBtn.snp.makeConstraints { (make) in
+                make.leading.equalTo(10)
+                make.top.equalTo(view.safeArea.top).offset(10)
+                make.width.height.equalTo(50)
+            }
+            backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
         }
-
         
+    }
+    
+    @objc func backbuttonTouched(sender:UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setMonthLength(month:Int, year:Int) {
@@ -57,7 +63,6 @@ class MainViewController: UIViewController {
         layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 500)
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)
         layout.scrollDirection = .horizontal
-        
         
         collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: layout)
         self.view.addSubview([collectionView])
@@ -81,7 +86,10 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
         
-        collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)        
+        if !fromCalendar {
+                    collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        }
+    
     }
 
 }
@@ -100,7 +108,14 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
         
         let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
         
-        cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: UIImage())
+        if fromCalendar {
+            cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: UIImage())
+
+        }else{
+            cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: UIImage())
+
+        }
+        
        
         return cell
      }
@@ -110,13 +125,35 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
         let vc = DiaryViewController()
         
         if fromCalendar {
+   
+            var monthId = "\(selectedMonth)"
+            var dayId = "\(indexPath.row + 1)"
             
-            vc.dateId = "\(selectedYear)\(selectedMonth)\(indexPath.row + 1)"
+            if monthId.count == 1 {
+                monthId = "0\(monthId)"
+            }
+            if dayId.count == 1 {
+                dayId = "0\(dayId)"
+            }
+            
+            vc.dateId = "\(selectedYear)\(monthId)\(dayId)"
             
         }else{
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
-            let id = "\(calendar.year!)\(calendar.month!)\(indexPath.row + 1)"
+            var monthId = "\(calendar.month!)"
+            var dayId = "\(indexPath.row + 1)"
+            
+            
+            if monthId.count == 1 {
+                monthId = "0\(monthId)"
+            }
+            if dayId.count == 1 {
+                dayId = "0\(dayId)"
+            }
+            
+            
+            let id = "\(calendar.year!)\(monthId)\(dayId)"
             
             vc.dateId = id
         }

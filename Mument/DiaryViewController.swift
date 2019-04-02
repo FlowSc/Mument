@@ -140,12 +140,11 @@ class DiaryViewController: UIViewController {
         let diary = Diary.init()
         diary.contents = diaryTv.text
         diary.song = _selectedSong
-        diary.id = "DDGGG"
+        diary.id = dateId
         
         try!realm.write {
             realm.add(diary)
         }
-        
     }
     
     @objc func keyboardResign(noti:Notification) {
@@ -183,20 +182,13 @@ extension DiaryViewController:MusicPlayerViewDelegate {
            appMusicPlayer.pause()
         }
     }
-    
 
-    
     func addMusic() {
-        print("AddMusic")
         let msvc = MusicSelectViewController()
         
         let selectedVc = UINavigationController.init(rootViewController: msvc)
-        
             self.present(selectedVc, animated: true, completion: nil)
-    
     }
-    
-
 }
 
 class MusicPlayerView:UIView {
@@ -221,7 +213,6 @@ class MusicPlayerView:UIView {
     
     private func setUI() {
         
-//        if isFirstAdd {
         self.addSubview([firstAddBtn, firstAddInfoLb])
         
         firstAddBtn.snp.makeConstraints { (make) in
