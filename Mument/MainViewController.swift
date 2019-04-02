@@ -97,7 +97,7 @@ class MainViewController: UIViewController {
         if DEVICEWINDOW.height < 600 {
             layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 380)
         }else{
-            layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 500)
+            layout.itemSize = CGSize.init(width: view.frame.width - 100, height: 480)
 
         }
         
@@ -113,9 +113,9 @@ class MainViewController: UIViewController {
         }
         
         collectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeArea.top).offset(30)
+            make.top.equalTo(dateLb.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeArea.bottom).offset(-50)
+            make.bottom.equalTo(view.safeArea.bottom).offset(-30)
         }
         
         collectionView.backgroundColor = .white
