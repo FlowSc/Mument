@@ -24,15 +24,36 @@ class MainViewController: UIViewController {
     var selectedMonth:Int = 0
     var selectedYear:Int = 0
     let backBtn = UIButton()
+    var monthlyDiaries:[Diary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadingData()
+    }
+    
+    func loadingData() {
         if !fromCalendar {
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
+            dateLb.text = "\(calendar.year!)년 \(calendar.month!)월"
             monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
+            
+            monthlyDiaries.removeAll()
+            
+            for i in 1...monthLength! {
+                
+                let dayId = "\(calendar.year!)\(calendar.month!.addZero())\(i.addZero())"
+                
+                if let diary = realm.objects(Diary.self).filter({$0.id == dayId}).first {
+                    monthlyDiaries.append(diary)
+                }
+            }
+            
         }else{
             self.view.addSubview(backBtn)
             backBtn.snp.makeConstraints { (make) in
@@ -40,9 +61,19 @@ class MainViewController: UIViewController {
                 make.top.equalTo(view.safeArea.top).offset(10)
                 make.width.height.equalTo(50)
             }
+            dateLb.text = "\(selectedYear)년 \(selectedMonth)월"
             backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
+            monthlyDiaries.removeAll()
+            
+            for i in 1...monthLength! {
+                let dayId = "\(selectedYear)\(selectedMonth.addZero())\(i.addZero())"
+                
+                if let diary = realm.objects(Diary.self).filter({$0.id == dayId}).first {
+                    monthlyDiaries.append(diary)
+                }
+            }
+            
         }
-        
     }
     
     @objc func backbuttonTouched(sender:UIButton) {
@@ -65,7 +96,12 @@ class MainViewController: UIViewController {
         layout.scrollDirection = .horizontal
         
         collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: layout)
-        self.view.addSubview([collectionView])
+        self.view.addSubview([collectionView, dateLb])
+        
+        dateLb.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeArea.top).offset(20)
+            make.centerX.equalToSuperview()
+        }
         
         collectionView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeArea.top).offset(30)
@@ -106,62 +142,55 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScCollectionViewCell", for: indexPath) as! ScCollectionViewCell
         
+        
         let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
         
+  
         if fromCalendar {
-            cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: UIImage())
-
+            if let cellItem = monthlyDiaries.filter({$0.id.contains("\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())")}).first {
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: cellItem.song!.artworkUrl)
+            }else{
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)", thumnailImg: "")
+            }
         }else{
-            cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: UIImage())
-
+            if let cellItem = monthlyDiaries.filter({$0.id.contains("\(calendar.year!)\((calendar.month!).addZero())\((indexPath.row + 1).addZero())")}).first {
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: cellItem.song!.artworkUrl)
+            }else{
+                  cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)", thumnailImg: "")
+            }
         }
-        
-       
         return cell
      }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        var selectedId = ""
         let vc = DiaryViewController()
         
         if fromCalendar {
-   
-            var monthId = "\(selectedMonth)"
-            var dayId = "\(indexPath.row + 1)"
             
-            if monthId.count == 1 {
-                monthId = "0\(monthId)"
-            }
-            if dayId.count == 1 {
-                dayId = "0\(dayId)"
-            }
+            selectedId = "\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())"
             
-            vc.dateId = "\(selectedYear)\(monthId)\(dayId)"
+            vc.dateId = selectedId
             
         }else{
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
-            var monthId = "\(calendar.month!)"
-            var dayId = "\(indexPath.row + 1)"
+            selectedId = "\(calendar.year!)\(calendar.month!.addZero())\((indexPath.row + 1).addZero())"
             
-            
-            if monthId.count == 1 {
-                monthId = "0\(monthId)"
-            }
-            if dayId.count == 1 {
-                dayId = "0\(dayId)"
-            }
-            
-            
-            let id = "\(calendar.year!)\(monthId)\(dayId)"
-            
-            vc.dateId = id
+            vc.dateId = selectedId
         }
         
+        if let written = realm.objects(Diary.self).filter({$0.id == selectedId}).first {
 
+            vc.setWrittenInfo(diary: written)
+            self.navigationController?.pushViewController(vc, animated: true)
 
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+        }else{
+            self.navigationController?.pushViewController(vc, animated: true)
+
+        }
+
     }
     
     func lastDay(ofMonth m: Int, year y: Int) -> Int {
@@ -172,13 +201,7 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
         let date = cal.date(from: comps)!
         return cal.component(.day, from: date)
     }
-    
-
 }
-
-
-
-
 
 class ScCollectionViewCell:UICollectionViewCell {
     
@@ -192,11 +215,11 @@ class ScCollectionViewCell:UICollectionViewCell {
         setUI()
     }
     
-    func setData(isToday:Bool, date:String, thumnailImg:UIImage) {
+    func setData(isToday:Bool, date:String, thumnailImg:String) {
         
         todayIndicatorLb.isHidden = !isToday
         dateLb.text = date
-        imageView.image = thumnailImg
+        imageView.kf.setImage(with: URL.init(string: thumnailImg))
         
     }
     
@@ -222,6 +245,7 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-10)
         }
+        imageView.contentMode = .scaleToFill
         
     }
     
@@ -233,4 +257,16 @@ class ScCollectionViewCell:UICollectionViewCell {
 
 enum WeekDay:Int {
     case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday    
+}
+
+extension Int {
+    
+    func addZero() -> String{
+        
+        if "\(self)".count == 1 {
+            return "0\(self)"
+        }else{
+            return "\(self)"
+        }
+    }
 }

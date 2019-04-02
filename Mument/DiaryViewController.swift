@@ -38,12 +38,21 @@ class DiaryViewController: UIViewController {
     let keyboardResigner = UITapGestureRecognizer()
     var dateId:String = ""
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAction()
         setNotifications()
+    }
+    
+    func setWrittenInfo(diary:Diary) {
+        
+        self.diaryTv.text = diary.contents
+        self.selectedSong = diary.song
+    
+        
     }
     
 
@@ -144,6 +153,7 @@ class DiaryViewController: UIViewController {
         
         try!realm.write {
             realm.add(diary)
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
