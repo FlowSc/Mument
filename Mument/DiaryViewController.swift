@@ -123,7 +123,7 @@ class DiaryViewController: UIViewController {
         musicPlayerView.setBorder(color: .black, width: 0.5, cornerRadius: 3)
 
         diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
-        dateLb.text = dateId
+//        dateLb.text = dateId
         dateLb.textColor = .black
     }
     

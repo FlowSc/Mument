@@ -172,6 +172,7 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
             selectedId = "\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())"
             
             vc.dateId = selectedId
+//            vc.dateLb.text =
             
         }else{
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
@@ -180,6 +181,8 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
             
             vc.dateId = selectedId
         }
+        
+        vc.dateLb.text = "\(dateLb.text!) \(indexPath.row + 1)일"
         
         if let written = realm.objects(Diary.self).filter({$0.id == selectedId}).first {
 
