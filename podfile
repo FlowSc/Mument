@@ -13,6 +13,8 @@ target 'Mument' do
 	pod 'Alamofire'
 	pod 'Cider', '~> 0.10'
 	pod 'ObjectMapper'
+	pod 'Realm'
+	pod 'RealmSwift'
 
   target 'MumentTests' do
     inherit! :search_paths

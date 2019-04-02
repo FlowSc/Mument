@@ -19,10 +19,26 @@ class MainViewController: UIViewController {
     let currentDate = Date()
     let dateLb = UILabel()
     var collectionView:UICollectionView!
+    var monthLength:Int? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        
+        let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+
+        monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
+        
+    }
+    
+    func setMonthLength(month:Int, year:Int) {
+        
+        monthLength = lastDay(ofMonth: month, year: year)
+        
     }
     
     private func setUI() {
@@ -68,7 +84,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return monthLength ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,11 +102,36 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
         
         let vc = DiaryViewController()
         
+        let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+
+        
+        let id = "\(calendar.month!)\(indexPath.row + 1)"
+        
+        
+        vc.dateId = id
+
+        print(lastDay(ofMonth: 4, year: 2019))
+        
+//        currentDate.description(with: Locale.autoupdatingCurrent)
+        
         self.navigationController?.pushViewController(vc, animated: true)
         
         
     }
+    
+    func lastDay(ofMonth m: Int, year y: Int) -> Int {
+        let cal = Calendar.current
+        var comps = DateComponents(calendar: cal, year: y, month: m)
+        comps.setValue(m + 1, for: .month)
+        comps.setValue(0, for: .day)
+        let date = cal.date(from: comps)!
+        return cal.component(.day, from: date)
+    }
+    
+
 }
+
+
 
 
 

@@ -8,19 +8,21 @@
 
 import Foundation
 import ObjectMapper
+import Realm
+import RealmSwift
 
-class Playlist:Mappable {
+class Playlist:Object, Mappable {
     
     
-    var thumnailUrl:String = ""
-    var shortDescription:String = ""
-    var longDescription:String = ""
-    var playId:String = ""
-    var type:String = ""
-    var playUrl:String = ""
-    var curatorName:String = ""
-    var artistName:String = ""
-    var name:String = ""
+    @objc dynamic var thumnailUrl:String = ""
+    @objc dynamic var shortDescription:String = ""
+    @objc dynamic var longDescription:String = ""
+    @objc dynamic var playId:String = ""
+    @objc dynamic var type :String = ""
+    @objc dynamic var playUrl:String = ""
+    @objc dynamic var curatorName:String = ""
+    @objc dynamic var artistName:String = ""
+    @objc dynamic var name:String = ""
     
     func mapping(map: Map) {
         self.thumnailUrl <- map["attributes.artwork.url"]
@@ -44,15 +46,15 @@ class Playlist:Mappable {
     
 }
 
-class Song:Mappable {
+class Song:Object, Mappable {
     
-    var artistName:String = ""
-    var title:String = ""
-    var url:String = ""
-    var type:String = ""
-    var artworkUrl:String = ""
-    var id:String = ""
-    var albumName:String = ""
+    @objc dynamic var artistName:String = ""
+    @objc dynamic var title:String = ""
+    @objc dynamic var url:String = ""
+    @objc dynamic var type:String = ""
+    @objc dynamic var artworkUrl:String = ""
+    @objc dynamic var id:String = ""
+    @objc dynamic var albumName:String = ""
     
     func mapping(map: Map) {
         

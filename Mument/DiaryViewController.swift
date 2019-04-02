@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import MediaPlayer
+import RealmSwift
+import Realm
+
+let realm = try! Realm()
 
 class DiaryViewController: UIViewController {
+    
+    
+    let appMusicPlayer = MPMusicPlayerController.applicationMusicPlayer
+    let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer
     
     var selectedSong:Song? {
         didSet {
             if let _selected = selectedSong {
-                print("SONGS HERE!")
+                appleMusicPlayId(_selected.id)
                 musicPlayerView.setMusicPlayer(song: _selected)
             }
         }
@@ -27,6 +36,7 @@ class DiaryViewController: UIViewController {
     let musicPlayerView = MusicPlayerView()
     let backBtn = UIButton()
     let keyboardResigner = UITapGestureRecognizer()
+    var dateId:String = ""
     
 
     override func viewDidLoad() {
@@ -36,16 +46,22 @@ class DiaryViewController: UIViewController {
         setNotifications()
     }
     
+
+    private func appleMusicPlayId(_ id:String) {
+        
+        appMusicPlayer.setQueue(with: [id])
+        
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func setNotifications() {
+    private func setNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardBegin(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardResign(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(setSelectedSong(noti:)), name: NSNotification.Name.init("setSelectedSong"), object: nil)
         
     }
@@ -103,7 +119,6 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func keyboardResignTouched() {
-//        self.view.resignFirstResponder()
         self.diaryTv.resignFirstResponder()
     }
     
@@ -119,7 +134,18 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func tapAddBtn(sender:UIButton) {
-        print("ADD")
+        
+        guard let _selectedSong = selectedSong else {return}
+        
+        let diary = Diary.init()
+        diary.contents = diaryTv.text
+        diary.song = _selectedSong
+        diary.id = "DDGGG"
+        
+        try!realm.write {
+            realm.add(diary)
+        }
+        
     }
     
     @objc func keyboardResign(noti:Notification) {
@@ -150,6 +176,12 @@ class DiaryViewController: UIViewController {
 extension DiaryViewController:MusicPlayerViewDelegate {
     func play(isSelected: Bool) {
         print(isSelected)
+        
+        if isSelected {
+            appMusicPlayer.play()
+        }else{
+           appMusicPlayer.pause()
+        }
     }
     
 
@@ -161,18 +193,7 @@ extension DiaryViewController:MusicPlayerViewDelegate {
         let selectedVc = UINavigationController.init(rootViewController: msvc)
         
             self.present(selectedVc, animated: true, completion: nil)
-
     
-    }
-    
-
-    
-    func pause() {
-        print("PauseMusic")
-    }
-    
-    func repeatModeSelect() {
-        print("ChangeMusicMode")
     }
     
 
@@ -180,13 +201,15 @@ extension DiaryViewController:MusicPlayerViewDelegate {
 
 class MusicPlayerView:UIView {
     
-    let firstAddBtn = UIButton()
-    let firstAddInfoLb = UILabel()
+    private let firstAddBtn = UIButton()
+    private let firstAddInfoLb = UILabel()
     
-    let thumnailImv = UIImageView()
-    let playBtn = UIButton()
-    let pauseBtn = UIButton()
-    let repeatModeBtn = UIButton()
+    private let thumnailImv = UIImageView()
+    private let playBtn = UIButton()
+    private let pauseBtn = UIButton()
+    private let repeatModeBtn = UIButton()
+    private let titleLb = UILabel()
+    private let artistLb = UILabel()
     
     var isFirstAdd:Bool = true
     var delegate:MusicPlayerViewDelegate?
@@ -215,12 +238,15 @@ class MusicPlayerView:UIView {
         firstAddBtn.removeFromSuperview()
         firstAddInfoLb.removeFromSuperview()
         
-        self.addSubview([thumnailImv, playBtn, pauseBtn, repeatModeBtn])
+        self.addSubview([thumnailImv, playBtn])
         
         thumnailImv.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(100)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(10)
+            make.width.height.equalTo(120)
         }
+        
+        thumnailImv.setBorder(color: .clear, width: 1, cornerRadius: 3)
         
         playBtn.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -228,22 +254,11 @@ class MusicPlayerView:UIView {
             make.width.height.equalTo(50)
         }
         
-        repeatModeBtn.snp.makeConstraints { (make) in
-            make.trailing.equalTo(playBtn.snp.leading).offset(-20)
-            make.width.height.equalToSuperview()
-            make.top.equalTo(thumnailImv.snp.bottom).offset(10)
-        }
-        repeatModeBtn.snp.makeConstraints { (make) in
-            make.leading.equalTo(playBtn.snp.trailing).offset(20)
-            make.width.height.equalToSuperview()
-            make.top.equalTo(thumnailImv.snp.bottom).offset(10)
-        }
-        
-        repeatModeBtn.addTarget(self, action: #selector(selectRepeatMode(sender:)), for: .touchUpInside)
         playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
         
+        playBtn.backgroundColor = .black
+        
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
-//        pauseBtn.addTarget(self, action: #selector(), for: <#T##UIControl.Event#>)
 
         
     }
@@ -254,12 +269,6 @@ class MusicPlayerView:UIView {
     @objc func playMusic(sender:UIButton) {
         sender.isSelected = !(sender.isSelected)
         delegate?.play(isSelected: sender.isSelected)
-    }
-    @objc func pauseMusic(sender:UIButton) {
-        delegate?.pause()
-    }
-    @objc func selectRepeatMode(sender:UIButton) {
-        delegate?.repeatModeSelect()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -272,7 +281,6 @@ protocol MusicPlayerViewDelegate {
     
     func addMusic()
     func play(isSelected:Bool)
-    func pause()
-    func repeatModeSelect()
+  
     
 }

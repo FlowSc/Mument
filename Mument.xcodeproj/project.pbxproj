@@ -28,6 +28,7 @@
 		23CC8BBD2248C1E20036A120 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BBC2248C1E20036A120 /* Playlist.swift */; };
 		23CC8BBF2249CD6B0036A120 /* MusicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */; };
 		23CC8BC52251E9790036A120 /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */; };
+		23CC8BC7225317B50036A120 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BC6225317B50036A120 /* Diary.swift */; };
 		2E1B4C2E35F734058B3A5C5E /* Pods_MumentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BA900D4673187717F62A33 /* Pods_MumentUITests.framework */; };
 		7FC0C2C067A9D25F5A7B5936 /* Pods_MumentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 987B43B76BC0EE684C419DE1 /* Pods_MumentTests.framework */; };
 		E11D8657C6B8F83DA11F13F9 /* Pods_Mument.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EA0074B28B6009BB3305A0 /* Pods_Mument.framework */; };
@@ -79,6 +80,7 @@
 		23CC8BBC2248C1E20036A120 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDetailViewController.swift; sourceTree = "<group>"; };
 		23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
+		23CC8BC6225317B50036A120 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		37EA0074B28B6009BB3305A0 /* Pods_Mument.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mument.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F6E4F8F2D96F866CA08D776 /* Pods-Mument.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mument.debug.xcconfig"; path = "Target Support Files/Pods-Mument/Pods-Mument.debug.xcconfig"; sourceTree = "<group>"; };
 		987B43B76BC0EE684C419DE1 /* Pods_MumentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MumentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +154,7 @@
 				23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */,
 				23CC8BB22240B6AE0036A120 /* API.swift */,
 				23CC8BB42243304B0036A120 /* DiaryViewController.swift */,
+				23CC8BC6225317B50036A120 /* Diary.swift */,
 				23CC8BBC2248C1E20036A120 /* Playlist.swift */,
 				23CC8BA1224090D30036A120 /* Extension */,
 				23CC8B7622408CAE0036A120 /* Assets.xcassets */,
@@ -364,6 +367,8 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -377,6 +382,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -464,6 +471,7 @@
 				23CC8BAA224090D30036A120 /* BaseVerticalScrollView.swift in Sources */,
 				23CC8BB1224095330036A120 /* ConfigViewController.swift in Sources */,
 				23CC8BB52243304B0036A120 /* DiaryViewController.swift in Sources */,
+				23CC8BC7225317B50036A120 /* Diary.swift in Sources */,
 				23CC8BAB224090D30036A120 /* StringExtension.swift in Sources */,
 				23CC8BA02240901D0036A120 /* MainTabBarViewController.swift in Sources */,
 				23CC8BA8224090D30036A120 /* UIColor+Additions.swift in Sources */,
