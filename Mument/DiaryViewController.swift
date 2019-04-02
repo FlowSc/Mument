@@ -27,6 +27,8 @@ class DiaryViewController: UIViewController {
             }
         }
     }
+    
+    var diary:Diary?
     var selectedDateText:String = ""
     let verticalScrollView = BaseVerticalScrollView()
     var isEditable:Bool = false
@@ -39,7 +41,7 @@ class DiaryViewController: UIViewController {
     var dateId:String = ""
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -51,11 +53,12 @@ class DiaryViewController: UIViewController {
         
         self.diaryTv.text = diary.contents
         self.selectedSong = diary.song
-    
+        self.diary = diary
+        
         
     }
     
-
+    
     private func appleMusicPlayId(_ id:String) {
         
         appMusicPlayer.setQueue(with: [id])
@@ -81,7 +84,7 @@ class DiaryViewController: UIViewController {
         
         self.navigationController?.isNavigationBarHidden = true
         verticalScrollView.setScrollView(vc: self)
-
+        
         verticalScrollView.contentView.addSubview([dateLb, addBtn, diaryTv, musicPlayerView, backBtn])
         
         backBtn.snp.makeConstraints { (make) in
@@ -121,9 +124,8 @@ class DiaryViewController: UIViewController {
         addBtn.backgroundColor = .blue
         
         musicPlayerView.setBorder(color: .black, width: 0.5, cornerRadius: 3)
-
+        
         diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
-//        dateLb.text = dateId
         dateLb.textColor = .black
     }
     
@@ -135,9 +137,9 @@ class DiaryViewController: UIViewController {
         
         backBtn.addTarget(self, action: #selector(tapBackBtn(sender:)), for: .touchUpInside)
         addBtn.addTarget(self, action: #selector(tapAddBtn(sender:)), for: .touchUpInside)
-    
+        
     }
-
+    
     @objc func tapBackBtn(sender:UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -146,15 +148,34 @@ class DiaryViewController: UIViewController {
         
         guard let _selectedSong = selectedSong else {return}
         
-        let diary = Diary.init()
-        diary.contents = diaryTv.text
-        diary.song = _selectedSong
-        diary.id = dateId
         
-        try!realm.write {
-            realm.add(diary)
-            self.navigationController?.popToRootViewController(animated: true)
+        
+        if let _diary = diary {
+            
+            
+            
+            try! realm.write {
+                _diary.contents = diaryTv.text
+                _diary.song = _selectedSong
+                _diary.id = dateId
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            
+        }else{
+            
+            let diary = Diary.init()
+            
+            diary.contents = diaryTv.text
+            diary.song = _selectedSong
+            diary.id = dateId
+            
+            try!realm.write {
+                realm.add(diary)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }
+        
+        
     }
     
     @objc func keyboardResign(noti:Notification) {
@@ -179,7 +200,7 @@ class DiaryViewController: UIViewController {
             self.selectedSong = selected
         }
     }
-
+    
 }
 
 extension DiaryViewController:MusicPlayerViewDelegate {
@@ -189,15 +210,15 @@ extension DiaryViewController:MusicPlayerViewDelegate {
         if isSelected {
             appMusicPlayer.play()
         }else{
-           appMusicPlayer.pause()
+            appMusicPlayer.pause()
         }
     }
-
+    
     func addMusic() {
         let msvc = MusicSelectViewController()
         
         let selectedVc = UINavigationController.init(rootViewController: msvc)
-            self.present(selectedVc, animated: true, completion: nil)
+        self.present(selectedVc, animated: true, completion: nil)
     }
 }
 
@@ -260,7 +281,7 @@ class MusicPlayerView:UIView {
         playBtn.backgroundColor = .black
         
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
-
+        
         
     }
     
@@ -282,6 +303,6 @@ protocol MusicPlayerViewDelegate {
     
     func addMusic()
     func play(isSelected:Bool)
-  
+    
     
 }
