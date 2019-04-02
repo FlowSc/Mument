@@ -16,6 +16,7 @@ import MediaPlayer
 
 class MainViewController: UIViewController {
     
+    var fromCalendar:Bool = false
     let currentDate = Date()
     let dateLb = UILabel()
     var collectionView:UICollectionView!
@@ -25,13 +26,20 @@ class MainViewController: UIViewController {
         }
     }
     
+    var selectedMonth:Int = 0
+    var selectedYear:Int = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         
-        let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+        if !fromCalendar {
+            let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+            
+            monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
+        }
 
-        monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
         
     }
     
@@ -98,24 +106,24 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
      }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
         
         let vc = DiaryViewController()
         
-        let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+        if fromCalendar {
+            
+            vc.dateId = "\(selectedYear)\(selectedMonth)\(indexPath.row + 1)"
+            
+        }else{
+            let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
+            
+            let id = "\(calendar.year!)\(calendar.month!)\(indexPath.row + 1)"
+            
+            vc.dateId = id
+        }
+        
 
-        
-        let id = "\(calendar.month!)\(indexPath.row + 1)"
-        
-        
-        vc.dateId = id
 
-        print(lastDay(ofMonth: 4, year: 2019))
-        
-//        currentDate.description(with: Locale.autoupdatingCurrent)
-        
         self.navigationController?.pushViewController(vc, animated: true)
-        
         
     }
     
@@ -187,7 +195,5 @@ class ScCollectionViewCell:UICollectionViewCell {
 }
 
 enum WeekDay:Int {
-    
-    case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
-    
+    case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday    
 }
