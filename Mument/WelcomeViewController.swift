@@ -33,6 +33,7 @@ class WelcomeViewController: UIViewController {
         }
         
         signInBtn.setTitle("시작하기", for: .normal)
+        signInBtn.setTitleColor(.black, for: .normal)
         
 //        signInBtn.backgroundColor = .red
         
@@ -52,22 +53,6 @@ class WelcomeViewController: UIViewController {
     @objc func moveToMain(sender:UIButton) {
 
         let vc = MainTabBarViewController()
-
-        appleMusicCheck { (auth) in
-        
-            if auth {
-                self.present(vc, animated: true, completion: nil)
-            }else{
-                self.present(self.alertVc, animated: true, completion: nil)
-            }
-        }
-
-    }
-    
-
-    
-    
-    func appleMusicCheck(completion:@escaping (Bool)->()) {
         
         let serviceCon = SKCloudServiceController()
         
@@ -79,13 +64,22 @@ class WelcomeViewController: UIViewController {
                     
                     UserDefaults.standard.set(token, forKey: "MusicToken")
                     
-                    completion(true)
-                    
+                    if let _token = token {
+                        self.present(vc, animated: true, completion: nil)
+                    }else{
+                        print("Cancel 했을떄")
+                    }
                 }
+                
             }else{
-                completion(false)
+                self.present(self.alertVc, animated: true, completion: nil)
             }
         }
+    }
+
+    func appleMusicCheck(completion:@escaping (Bool)->()) {
+        
+
     }
     
     
