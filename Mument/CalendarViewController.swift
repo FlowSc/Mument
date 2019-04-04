@@ -11,9 +11,9 @@ import UIKit
 class CalendarViewController: UIViewController {
     
     let yearBtn = UIButton()
-    
     var monthCollectionView:UICollectionView!
-    var yearSelectCollectionView:UICollectionView!
+    var pickerView:UIPickerView!
+    var selectedYear = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,27 +32,76 @@ class CalendarViewController: UIViewController {
         let collectionViewLayout = UICollectionViewFlowLayout()
         monthCollectionView = UICollectionView.init(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionViewLayout.sectionInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
-
-        self.view.addSubview([yearBtn, monthCollectionView])
+        
+        if let currentYear = Calendar.current.dateComponents([.year], from: Date()).year {
+            yearBtn.setTitle("\(currentYear) 년", for: .normal)
+        }
+        
+        
+        pickerView = UIPickerView()
+        
+        self.view.addSubview([yearBtn, monthCollectionView, pickerView])
         self.monthCollectionView.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
         yearBtn.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeArea.top).offset(10)
+            make.leading.equalTo(20)
+            make.top.equalTo(view.safeArea.top).offset(25)
             make.width.equalTo(150)
-            make.height.equalTo(80)
+            make.height.equalTo(50)
         }
         
         yearBtn.setBorder(color: .black, width: 0.5, cornerRadius: 3)
         
         monthCollectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(yearBtn.snp.bottom).offset(10)
+            make.top.equalTo(yearBtn.snp.bottom).offset(25)
             make.leading.equalToSuperview()
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeArea.bottom)
         }
         
+        pickerView.snp.makeConstraints { (make) in
+            make.leading.equalTo(yearBtn.snp.trailing).offset(10)
+            make.top.equalTo(yearBtn.snp.top).offset(-5)
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+        }
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.isHidden = true
+        yearBtn.setTitleColor(.black, for: .normal)
+        
+        yearBtn.addTarget(self, action: #selector(callPickerView(sender:)), for: .touchUpInside)
     }
+    
+    @objc func callPickerView(sender:UIButton) {
+        
+        sender.isSelected = !(sender.isSelected)
+        
+        pickerView.isHidden = !sender.isSelected
+        
+    }
+}
+
+extension CalendarViewController:UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 50
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(2019 + row) 년"
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedYear = 2019 + row
+        yearBtn.setTitle("\(2019 + row) 년", for: .normal)
+    }
+    
+    
 }
 
 extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -87,7 +136,7 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
         let vc = MainViewController()
         
         
-        vc.selectedYear = 2019
+        vc.selectedYear = selectedYear
         vc.selectedMonth = indexPath.row + 1
         vc.setMonthLength(month: indexPath.row + 1, year: 2019)
         vc.fromCalendar = true

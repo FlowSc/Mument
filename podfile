@@ -15,6 +15,7 @@ target 'Mument' do
 	pod 'ObjectMapper'
 	pod 'Realm'
 	pod 'RealmSwift'
+	pod "ScrollableStackView"
 
   target 'MumentTests' do
     inherit! :search_paths
