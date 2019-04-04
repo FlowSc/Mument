@@ -106,24 +106,11 @@ class MusicSelectViewController: UIViewController {
     
     func appleMusicCheck() {
         
-        let serviceCon = SKCloudServiceController()
-        
-        SKCloudServiceController.requestAuthorization { (status) in
-            print(status)
-            
-            serviceCon.requestUserToken(forDeveloperToken: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkEzUUxZRFhRWTYifQ.eyJpYXQiOjE1NTI5NzM1MTEsImV4cCI6MTU2ODUyNTUxMSwiaXNzIjoiUzM2SlZHRjM3OCJ9.ctz7UBkr7mvrP0TrW9VuHuA10oPvwMIQGlMtjjv_Hs9JYw8yGMxWPNDvyEQSrREj3Vqv33Qx6Ykx-0QOegqCVA") { (token, err) in
-                
-                UserDefaults.standard.set(token, forKey: "MusicToken")
-                
-                if let _token = token {
-                    API.getRecentPlayed(userToken: _token, completion: { (result) in
-                        self.recentedPlaylists = result
-                    })
-                }
-            }
+        if let _token = UserDefaults.standard.string(forKey: "MusicToken") {
+            API.getRecentPlayed(userToken: _token, completion: { (result) in
+                self.recentedPlaylists = result
+            })
         }
-        
-        
     }
     
 }

@@ -29,6 +29,7 @@
 		23CC8BBF2249CD6B0036A120 /* MusicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */; };
 		23CC8BC52251E9790036A120 /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */; };
 		23CC8BC7225317B50036A120 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BC6225317B50036A120 /* Diary.swift */; };
+		23CC8BCB2255CFE60036A120 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8BCA2255CFE60036A120 /* WelcomeViewController.swift */; };
 		2E1B4C2E35F734058B3A5C5E /* Pods_MumentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2BA900D4673187717F62A33 /* Pods_MumentUITests.framework */; };
 		7FC0C2C067A9D25F5A7B5936 /* Pods_MumentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 987B43B76BC0EE684C419DE1 /* Pods_MumentTests.framework */; };
 		E11D8657C6B8F83DA11F13F9 /* Pods_Mument.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EA0074B28B6009BB3305A0 /* Pods_Mument.framework */; };
@@ -81,6 +82,7 @@
 		23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDetailViewController.swift; sourceTree = "<group>"; };
 		23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
 		23CC8BC6225317B50036A120 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
+		23CC8BCA2255CFE60036A120 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		37EA0074B28B6009BB3305A0 /* Pods_Mument.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mument.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F6E4F8F2D96F866CA08D776 /* Pods-Mument.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mument.debug.xcconfig"; path = "Target Support Files/Pods-Mument/Pods-Mument.debug.xcconfig"; sourceTree = "<group>"; };
 		987B43B76BC0EE684C419DE1 /* Pods_MumentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MumentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 				23CC8BB0224095330036A120 /* ConfigViewController.swift */,
 				23CC8B9D22408F4D0036A120 /* MainViewController.swift */,
 				23CC8BBA2248BC390036A120 /* MusicSelectViewController.swift */,
+				23CC8BCA2255CFE60036A120 /* WelcomeViewController.swift */,
 				23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */,
 				23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */,
 				23CC8BB22240B6AE0036A120 /* API.swift */,
@@ -484,6 +487,7 @@
 				23CC8BAD224090D30036A120 /* UIView_extension.swift in Sources */,
 				23CC8BC52251E9790036A120 /* MusicTableViewCell.swift in Sources */,
 				23CC8BBD2248C1E20036A120 /* Playlist.swift in Sources */,
+				23CC8BCB2255CFE60036A120 /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

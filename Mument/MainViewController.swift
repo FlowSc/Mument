@@ -76,6 +76,8 @@ class MainViewController: UIViewController {
             }
             
         }
+        
+        self.collectionView.reloadData()
     }
     
     @objc func backbuttonTouched(sender:UIButton) {

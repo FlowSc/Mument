@@ -19,9 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
 //        let rootVc = MainViewController()
+        let rootVc = UINavigationController.init(rootViewController: WelcomeViewController())
         let rootTabVc = MainTabBarViewController()
         
-        window?.rootViewController = rootTabVc
+        
+        if let _ = UserDefaults.standard.string(forKey: "MusicToken") {
+            window?.rootViewController = rootTabVc
+
+        }else{
+            window?.rootViewController = rootVc
+
+        }
+
+        
         
         window?.makeKeyAndVisible()
         
