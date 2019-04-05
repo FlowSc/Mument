@@ -172,8 +172,6 @@ class DiaryViewController: UIViewController {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
-        
-        
     }
     
     @objc func keyboardResign(noti:Notification) {
@@ -257,7 +255,7 @@ class MusicPlayerView:UIView {
         firstAddBtn.removeFromSuperview()
         firstAddInfoLb.removeFromSuperview()
         
-        self.addSubview([thumnailImv, playBtn, titleLb, artistLb])
+        self.addSubview([thumnailImv, playBtn, titleLb, artistLb, firstAddBtn])
         
         thumnailImv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
@@ -289,9 +287,17 @@ class MusicPlayerView:UIView {
             make.width.height.equalTo(40)
         }
         
+        firstAddBtn.snp.makeConstraints { (make) in
+            make.bottom.equalTo(-10)
+            make.trailing.equalTo(-10)
+            make.width.height.equalTo(40)
+        }
+        
+        firstAddBtn.addTarget(self, action: #selector(addMusicTouched(sender:)), for: .touchUpInside)
         playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
         
         playBtn.backgroundColor = .black
+        firstAddBtn.backgroundColor = .black
         
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
         titleLb.text = song.title
