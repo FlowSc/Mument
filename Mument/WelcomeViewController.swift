@@ -36,6 +36,7 @@ class WelcomeViewController: UIViewController {
         }
 
         signInBtn.setTitle("시작하기", for: .normal)
+        signInBtn.titleLabel?.font = UIFont.notoSansMedium(20)
         signInBtn.setTitleColor(.black, for: .normal)
                 
         signInBtn.addTarget(self, action: #selector(moveToMain(sender:)), for: .touchUpInside)

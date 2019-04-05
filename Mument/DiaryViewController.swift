@@ -111,7 +111,7 @@ class DiaryViewController: UIViewController {
         musicPlayerView.snp.makeConstraints { (make) in
             make.top.equalTo(diaryTv.snp.bottom).offset(20)
             make.leading.equalTo(10)
-            make.height.equalTo(200)
+            make.height.equalTo(150)
             make.bottom.equalTo(-10)
             make.centerX.equalToSuperview()
         }
@@ -257,12 +257,28 @@ class MusicPlayerView:UIView {
         firstAddBtn.removeFromSuperview()
         firstAddInfoLb.removeFromSuperview()
         
-        self.addSubview([thumnailImv, playBtn])
+        self.addSubview([thumnailImv, playBtn, titleLb, artistLb])
         
         thumnailImv.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.leading.equalTo(10)
             make.top.equalTo(10)
-            make.width.height.equalTo(120)
+            make.width.height.equalTo(80)
+        }
+        
+        titleLb.snp.makeConstraints { (make) in
+            make.top.equalTo(10)
+            make.leading.equalTo(thumnailImv.snp.trailing).offset(10)
+            make.trailing.equalTo(-10)
+//            make.height.equalTo(20)
+        }
+        
+        titleLb.numberOfLines = 0
+        artistLb.numberOfLines = 0
+        
+        artistLb.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLb.snp.bottom).offset(5)
+            make.leading.equalTo(titleLb.snp.leading)
+            make.trailing.equalTo(-10)
         }
         
         thumnailImv.setBorder(color: .clear, width: 1, cornerRadius: 3)
@@ -270,7 +286,7 @@ class MusicPlayerView:UIView {
         playBtn.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(thumnailImv.snp.bottom).offset(10)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(40)
         }
         
         playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
@@ -278,6 +294,8 @@ class MusicPlayerView:UIView {
         playBtn.backgroundColor = .black
         
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
+        titleLb.text = song.title
+        artistLb.text = song.artistName
         
         
     }
