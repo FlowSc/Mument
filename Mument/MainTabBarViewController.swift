@@ -35,14 +35,20 @@ class MainTabBarViewController: UITabBarController {
         
         self.viewControllers = [ncvc, nmvc, nconvc]
         self.selectedIndex = 1
+        self.mainBtn.isSelected = true
         
     }
     
     private func setUI() {
-        self.tabBar.addSubview(bottomView)
+        self.view.addSubview(bottomView)
+        print(self.tabBar.subviews)
         
         bottomView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+          
+            make.bottom.equalTo(view.safeArea.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(self.tabBar.frame.height)
+            
         }
         
         let btns = [searchBtn, mainBtn, configBtn]
@@ -90,7 +96,10 @@ class MainTabBarViewController: UITabBarController {
         
         _ = [searchBtn, mainBtn, configBtn].map({$0.isSelected = false})
         
-        sender.isSelected = !(sender.isSelected)
+        print(sender)
+        
+        sender.isSelected = true
+        
         self.selectedIndex = sender.tag
     }
 }
@@ -98,7 +107,7 @@ class MainTabBarViewController: UITabBarController {
 
 extension UIButton {
     func setImageEdge() {
-        self.imageEdgeInsets = UIEdgeInsets.init(top: 20, left: 40, bottom: 30, right: 40)
+        self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 40, bottom: 10, right: 40)
     }
 }
 
