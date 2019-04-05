@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
     }
     
     private func setUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .backgroundBrown
         self.navigationController?.isNavigationBarHidden = true
         
         let layout = UICollectionViewFlowLayout()
@@ -120,7 +120,7 @@ class MainViewController: UIViewController {
             make.bottom.equalTo(view.safeArea.bottom).offset(-30)
         }
         
-        collectionView.backgroundColor = .white
+        self.collectionView.backgroundColor = .backgroundBrown
         collectionView.register(ScCollectionViewCell.self, forCellWithReuseIdentifier: "ScCollectionViewCell")
 
         collectionView.delegate = self
@@ -239,7 +239,8 @@ class ScCollectionViewCell:UICollectionViewCell {
     
     private func setUI() {
      
-        self.setBorder(color: .black, width: 0.5, cornerRadius: 5)
+        self.setBorder(color: .clear, width: 0.5, cornerRadius: 5)
+        self.dropShadow(color: .black, offSet: CGSize.init(width: 5, height: 5))
         self.addSubview([todayIndicatorLb, dateLb, imageView])
         
         todayIndicatorLb.snp.makeConstraints { (make) in
@@ -248,6 +249,7 @@ class ScCollectionViewCell:UICollectionViewCell {
         }
         
         todayIndicatorLb.text = "TODAY"
+        self.backgroundColor = .cellBrown
         
         dateLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()

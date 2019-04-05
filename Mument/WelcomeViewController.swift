@@ -27,7 +27,7 @@ class WelcomeViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview([signInBtn])
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .backgroundBrown
     
         
         signInBtn.snp.makeConstraints { (make) in
@@ -72,9 +72,9 @@ class WelcomeViewController: UIViewController {
                         LoadingIndicator.stop(sender: sender)
                         self.present(vc, animated: true, completion: nil)
                     }else{
-                        
- 
-
+                        DispatchQueue.main.async {
+                            LoadingIndicator.stop(sender: sender)
+                        }
                     }
                 }
             }else{

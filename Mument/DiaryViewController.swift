@@ -10,6 +10,7 @@ import UIKit
 import MediaPlayer
 import RealmSwift
 import Realm
+import Lottie
 
 let realm = try! Realm()
 
@@ -228,6 +229,7 @@ class MusicPlayerView:UIView {
     private let repeatModeBtn = UIButton()
     private let titleLb = UILabel()
     private let artistLb = UILabel()
+    private let musicAnimView = LOTAnimationView.init(name: "music")
     
     var isFirstAdd:Bool = true
     var delegate:MusicPlayerViewDelegate?
@@ -255,7 +257,7 @@ class MusicPlayerView:UIView {
         firstAddBtn.removeFromSuperview()
         firstAddInfoLb.removeFromSuperview()
         
-        self.addSubview([thumnailImv, playBtn, titleLb, artistLb, firstAddBtn])
+        self.addSubview([thumnailImv, playBtn, titleLb, artistLb, firstAddBtn, musicAnimView])
         
         thumnailImv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
@@ -287,11 +289,22 @@ class MusicPlayerView:UIView {
             make.width.height.equalTo(40)
         }
         
+        musicAnimView.snp.makeConstraints { (make) in
+            make.leading.equalTo(playBtn.snp.trailing).offset(0)
+            make.width.height.equalTo(100)
+            make.centerY.equalTo(playBtn)
+        }
+    
+        
+        
+        
         firstAddBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(-10)
             make.trailing.equalTo(-10)
             make.width.height.equalTo(40)
         }
+        
+        musicAnimView.loopAnimation = true
         
         firstAddBtn.addTarget(self, action: #selector(addMusicTouched(sender:)), for: .touchUpInside)
         playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
@@ -312,6 +325,13 @@ class MusicPlayerView:UIView {
     @objc func playMusic(sender:UIButton) {
         sender.isSelected = !(sender.isSelected)
         delegate?.play(isSelected: sender.isSelected)
+        
+        if sender.isSelected {
+            musicAnimView.play()
+        }else{
+            musicAnimView.pause()
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
