@@ -55,11 +55,10 @@ class MainTabBarViewController: UITabBarController {
             
             btn.tag = i
             btn.addTarget(self, action: #selector(setAction(sender:)), for: .touchUpInside)
+            btn.setImageEdge()
             
         }
         
-        
-        searchBtn.setImage(UIImage.init(named: "calendar"), for: .normal)
         mainBtn.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.center.equalToSuperview()
@@ -71,19 +70,55 @@ class MainTabBarViewController: UITabBarController {
             make.trailing.equalTo(mainBtn.snp.leading)
             make.width.equalTo(mainBtn.snp.width)
         }
-        
-        mainBtn.setImage(UIImage.init(named: "bookmark"), for: .normal)
-        configBtn.setImage(UIImage.init(named: "menu"), for: .normal)
-//        mainBtn.setBackgroundColor(color: .white, forState: .normal)
-        
+
         configBtn.snp.makeConstraints { (make) in
             make.top.trailing.bottom.equalToSuperview()
             make.leading.equalTo(mainBtn.snp.trailing)
             make.width.equalTo(searchBtn.snp.width)
         }
+        
+        searchBtn.setImage(UIImage.init(named: "calendar")?.imageWithColor(color1: .gray), for: .normal)
+        mainBtn.setImage(UIImage.init(named: "bookmark")?.imageWithColor(color1: .gray), for: .normal)
+        configBtn.setImage(UIImage.init(named: "menu")?.imageWithColor(color1: .gray), for: .normal)
+        
+        searchBtn.setImage(UIImage.init(named: "calendar")?.imageWithColor(color1: .black), for: .selected)
+        mainBtn.setImage(UIImage.init(named: "bookmark")?.imageWithColor(color1: .black), for: .selected)
+        configBtn.setImage(UIImage.init(named: "menu")?.imageWithColor(color1: .black), for: .selected)
     }
     
     @objc func setAction(sender:UIButton) {
+        
+        _ = [searchBtn, mainBtn, configBtn].map({$0.isSelected = false})
+        
+        sender.isSelected = !(sender.isSelected)
         self.selectedIndex = sender.tag
+    }
+}
+
+
+extension UIButton {
+    func setImageEdge() {
+        self.imageEdgeInsets = UIEdgeInsets.init(top: 20, left: 40, bottom: 30, right: 40)
+    }
+}
+
+extension UIImage {
+    func imageWithColor(color1: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        color1.setFill()
+        
+        let context = UIGraphicsGetCurrentContext()
+        context?.translateBy(x: 0, y: self.size.height)
+        context?.scaleBy(x: 1.0, y: -1.0)
+        context?.setBlendMode(CGBlendMode.normal)
+        
+        let rect = CGRect(origin: .zero, size: CGSize(width: self.size.width, height: self.size.height))
+        context?.clip(to: rect, mask: self.cgImage!)
+        context?.fill(rect)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }

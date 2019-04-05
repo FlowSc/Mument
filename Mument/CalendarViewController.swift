@@ -166,7 +166,8 @@ class MonthCollectionViewCell:UICollectionViewCell {
         lbl.textColor = .black
         lbl.textAlignment = .center
         
-        self.setBorder(color: .black, width: 0.5, cornerRadius: 5)
+        self.setBorder(color: .clear, width: 0.5, cornerRadius: 5)
+        self.dropShadow(color: .black, offSet: CGSize.init(width: 5, height: 5))
         self.backgroundColor = .cellBrown
     }
     

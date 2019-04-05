@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         if let _ = UserDefaults.standard.string(forKey: "MusicToken") { // 
-            window?.rootViewController = rootVc
+            window?.rootViewController = rootTabVc
 
         }else{
             window?.rootViewController = rootVc
