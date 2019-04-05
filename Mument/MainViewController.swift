@@ -59,14 +59,16 @@ class MainViewController: UIViewController {
             
         }else{
             self.view.addSubview(backBtn)
+            
             backBtn.snp.makeConstraints { (make) in
-                make.leading.equalTo(10)
                 make.top.equalTo(view.safeArea.top).offset(10)
-                make.width.height.equalTo(50)
+                make.leading.equalTo(10)
+                make.width.height.equalTo(30)
             }
+            backBtn.setImage(UIImage.init(named: "left-arrow-1"), for: .normal)
+            
             dateLb.text = "\(selectedYear)년 \(selectedMonth)월"
             backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
-            backBtn.backgroundColor = .red
             monthlyDiaries.removeAll()
             
             for i in 1...monthLength! {
@@ -76,7 +78,6 @@ class MainViewController: UIViewController {
                     monthlyDiaries.append(diary)
                 }
             }
-            
         }
         
         self.collectionView.reloadData()
