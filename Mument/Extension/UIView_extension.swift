@@ -65,6 +65,17 @@ extension UIView {
         self.layer.mask = mask
     }
     
+    func shadow() {
+        
+        layer.cornerRadius = 5
+        layer.shadowColor = UIColor.gray.cgColor
+        layer.shadowOffset = CGSize.init(width: 5, height: 5)
+        layer.shadowOpacity = 1.0
+        layer.shadowRadius = 7.0
+        layer.masksToBounds =  false
+        
+    }
+    
     
     
     func dropShadow(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {

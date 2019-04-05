@@ -105,7 +105,7 @@ class DiaryViewController: UIViewController {
         diaryTv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
             make.centerX.equalToSuperview()
-            make.top.equalTo(backBtn.snp.bottom).offset(30)
+            make.top.equalTo(backBtn.snp.bottom).offset(40)
             make.height.equalTo(UIWindow().frame.size.height / 2.5)
         }
         
@@ -125,11 +125,10 @@ class DiaryViewController: UIViewController {
         addBtn.setImage(UIImage.init(named: "edit"), for: .normal)
         diaryTv.backgroundColor = .backgroundBrown
 //
-//        musicPlayerView.setBorder(color: .black, width: 0.5, cornerRadius: 3)
+        musicPlayerView.shadow()
 //
 //        diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
-        diaryTv.dropShadow(color: .black, offSet: CGSize.init(width: -5, height: 5))
-        musicPlayerView.dropShadow(color: .black, offSet: CGSize.init(width: -5, height: 5))
+        diaryTv.shadow()
 
         dateLb.textColor = .black
     }
@@ -247,13 +246,16 @@ class MusicPlayerView:UIView {
     private func setUI() {
         
         self.addSubview([firstAddBtn, firstAddInfoLb])
-        
+        self.backgroundColor = .backgroundBrown
+    
         firstAddBtn.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.height.equalTo(60)
         }
         firstAddBtn.addTarget(self, action: #selector(addMusicTouched(sender:)), for: .touchUpInside)
         firstAddBtn.setImage(UIImage.init(named: "add"), for: .normal)
+        self.layoutIfNeeded()
+        self.layoutSubviews()
 
         
     }

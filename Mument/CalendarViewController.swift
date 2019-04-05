@@ -51,7 +51,8 @@ class CalendarViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        yearBtn.setBorder(color: .black, width: 0.5, cornerRadius: 3)
+//        yearBtn.setBorder(color: .clear, width: 0.5, cornerRadius: 3)
+       
         
         monthCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(yearBtn.snp.bottom).offset(25)
@@ -72,6 +73,10 @@ class CalendarViewController: UIViewController {
         yearBtn.setTitleColor(.black, for: .normal)
         
         yearBtn.addTarget(self, action: #selector(callPickerView(sender:)), for: .touchUpInside)
+
+        yearBtn.shadow()
+        yearBtn.backgroundColor = .cellBrown
+//
     }
     
     @objc func callPickerView(sender:UIButton) {
