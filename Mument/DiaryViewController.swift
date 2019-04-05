@@ -80,7 +80,7 @@ class DiaryViewController: UIViewController {
     }
     
     private func setUI() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .backgroundBrown
         self.view.addSubview(verticalScrollView)
         
         self.navigationController?.isNavigationBarHidden = true
@@ -91,9 +91,9 @@ class DiaryViewController: UIViewController {
         backBtn.snp.makeConstraints { (make) in
             make.top.equalTo(50)
             make.leading.equalTo(10)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(30)
         }
-        backBtn.backgroundColor = .red
+        backBtn.setImage(UIImage.init(named: "left-arrow-1"), for: .normal)
         dateLb.snp.makeConstraints { (make) in
             make.centerY.equalTo(backBtn.snp.centerY)
             make.centerX.equalToSuperview()
@@ -105,7 +105,7 @@ class DiaryViewController: UIViewController {
         diaryTv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
             make.centerX.equalToSuperview()
-            make.top.equalTo(backBtn.snp.bottom).offset(40)
+            make.top.equalTo(backBtn.snp.bottom).offset(30)
             make.height.equalTo(UIWindow().frame.size.height / 2.5)
         }
         
@@ -120,13 +120,17 @@ class DiaryViewController: UIViewController {
         addBtn.snp.makeConstraints { (make) in
             make.trailing.equalTo(-10)
             make.top.equalTo(50)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(30)
         }
-        addBtn.backgroundColor = .blue
-        
-        musicPlayerView.setBorder(color: .black, width: 0.5, cornerRadius: 3)
-        
-        diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
+        addBtn.setImage(UIImage.init(named: "edit"), for: .normal)
+        diaryTv.backgroundColor = .backgroundBrown
+//
+//        musicPlayerView.setBorder(color: .black, width: 0.5, cornerRadius: 3)
+//
+//        diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
+        diaryTv.dropShadow(color: .black, offSet: CGSize.init(width: -5, height: 5))
+        musicPlayerView.dropShadow(color: .black, offSet: CGSize.init(width: -5, height: 5))
+
         dateLb.textColor = .black
     }
     
@@ -148,7 +152,7 @@ class DiaryViewController: UIViewController {
     @objc func tapAddBtn(sender:UIButton) {
         
         guard let _selectedSong = selectedSong else {return}
-        
+        LoadingIndicator.start(vc: self, sender: sender)
         
         
         if let _diary = diary {
@@ -170,6 +174,7 @@ class DiaryViewController: UIViewController {
             
             try!realm.write {
                 realm.add(diary)
+                LoadingIndicator.stop(sender: sender)
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
@@ -245,10 +250,11 @@ class MusicPlayerView:UIView {
         
         firstAddBtn.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.height.equalTo(100)
+            make.width.height.equalTo(60)
         }
         firstAddBtn.addTarget(self, action: #selector(addMusicTouched(sender:)), for: .touchUpInside)
-        firstAddBtn.backgroundColor = .black
+        firstAddBtn.setImage(UIImage.init(named: "add"), for: .normal)
+
         
     }
     
@@ -290,12 +296,11 @@ class MusicPlayerView:UIView {
         }
         
         musicAnimView.snp.makeConstraints { (make) in
-            make.leading.equalTo(playBtn.snp.trailing).offset(0)
-            make.width.height.equalTo(100)
+            make.leading.equalTo(10)
+            make.width.height.equalTo(40)
             make.centerY.equalTo(playBtn)
         }
-    
-        
+//        musicAnimView.f
         
         
         firstAddBtn.snp.makeConstraints { (make) in
@@ -304,13 +309,18 @@ class MusicPlayerView:UIView {
             make.width.height.equalTo(40)
         }
         
+        
+        firstAddBtn.setImage(UIImage.init(named: "add"), for: .normal)
+        
         musicAnimView.loopAnimation = true
         
         firstAddBtn.addTarget(self, action: #selector(addMusicTouched(sender:)), for: .touchUpInside)
         playBtn.addTarget(self, action: #selector(playMusic(sender:)), for: .touchUpInside)
+        playBtn.setImage(UIImage.init(named: "play-button"), for: .normal)
+        playBtn.setImage(UIImage.init(named: "pause"), for: .selected)
         
-        playBtn.backgroundColor = .black
-        firstAddBtn.backgroundColor = .black
+//        playBtn.backgroundColor = .black
+//        firstAddBtn.backgroundColor = .black
         
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
         titleLb.text = song.title

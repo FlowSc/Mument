@@ -59,6 +59,7 @@ class MainTabBarViewController: UITabBarController {
         }
         
         
+        searchBtn.setImage(UIImage.init(named: "calendar"), for: .normal)
         mainBtn.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
             make.center.equalToSuperview()
@@ -71,9 +72,9 @@ class MainTabBarViewController: UITabBarController {
             make.width.equalTo(mainBtn.snp.width)
         }
         
-        searchBtn.setBackgroundColor(color: .blue, forState: .normal)
-        
-        mainBtn.setBackgroundColor(color: .white, forState: .normal)
+        mainBtn.setImage(UIImage.init(named: "bookmark"), for: .normal)
+        configBtn.setImage(UIImage.init(named: "menu"), for: .normal)
+//        mainBtn.setBackgroundColor(color: .white, forState: .normal)
         
         configBtn.snp.makeConstraints { (make) in
             make.top.trailing.bottom.equalToSuperview()

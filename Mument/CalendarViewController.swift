@@ -17,7 +17,6 @@ class CalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         setUI()
 
         monthCollectionView.delegate = self
@@ -41,7 +40,9 @@ class CalendarViewController: UIViewController {
         pickerView = UIPickerView()
         
         self.view.addSubview([yearBtn, monthCollectionView, pickerView])
-        self.monthCollectionView.backgroundColor = .white
+        
+        self.view.backgroundColor = .backgroundBrown
+        self.monthCollectionView.backgroundColor = .backgroundBrown
         self.navigationController?.isNavigationBarHidden = true
         yearBtn.snp.makeConstraints { (make) in
             make.leading.equalTo(20)
@@ -166,6 +167,7 @@ class MonthCollectionViewCell:UICollectionViewCell {
         lbl.textAlignment = .center
         
         self.setBorder(color: .black, width: 0.5, cornerRadius: 5)
+        self.backgroundColor = .cellBrown
     }
     
     func setMonth(_ month:Int) {
