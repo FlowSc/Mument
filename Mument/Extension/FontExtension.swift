@@ -1,12 +1,3 @@
-//
-//  FontExtension.swift
-//  Mument
-//
-//  Created by Seongchan Kang on 05/04/2019.
-//  Copyright © 2019 seongchan. All rights reserved.
-//
-
-import Foundation
 import UIKit
 
 extension UIFont {
@@ -34,13 +25,16 @@ extension UIFont {
     static func montserratLight(_ size: CGFloat) -> UIFont {
         return UIFont(name: "Montserrat-Light", size: size)!
     }
-
-    static func notoSansReg(_ size: CGFloat) -> UIFont {
+    
+    
+    
+    
+    static func notrReg(_ size: CGFloat) -> UIFont {
         return UIFont(name: "NotoSansKR-Regular", size: size)!
     }
     
-    static func notoSansMedium(_ size: CGFloat) -> UIFont {
+    static func notoMedium(_ size: CGFloat) -> UIFont {
         return UIFont(name: "NotoSansKR-Medium", size: size)!
     }
-    
+
 }

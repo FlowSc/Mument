@@ -38,6 +38,8 @@ class MainViewController: UIViewController {
     }
     
     func loadingData() {
+        
+        dateLb.font = UIFont.AmericanTypeWriter(.bold, size: 30)
         if !fromCalendar {
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
@@ -160,14 +162,22 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
         if fromCalendar {
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())")}).first {
                 cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
+                cell.emptyLb.isHidden = true
+
             }else{
                 cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: "")
+                cell.emptyLb.isHidden = false
+
             }
         }else{
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(calendar.year!)\((calendar.month!).addZero())\((indexPath.row + 1).addZero())")}).first {
                 cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
+                cell.emptyLb.isHidden = true
+
             }else{
                   cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: "")
+                cell.emptyLb.isHidden = false
+                
             }
         }
         return cell
@@ -219,9 +229,10 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
 
 class ScCollectionViewCell:UICollectionViewCell {
     
-    let todayIndicatorLb = UILabel()
-    let dateLb = UILabel()
-    let imageView = UIImageView()
+    private let todayIndicatorLb = UILabel()
+    private let dateLb = UILabel()
+    private let imageView = UIImageView()
+    let emptyLb = UILabel()
     
     
     override init(frame: CGRect) {
@@ -233,15 +244,22 @@ class ScCollectionViewCell:UICollectionViewCell {
         
         todayIndicatorLb.isHidden = !isToday
         dateLb.text = date
-        imageView.kf.setImage(with: URL.init(string: thumnailImg))
+        dateLb.font = UIFont.AmericanTypeWriter(.regular, size: 20)
         
+//        if thumnailImg != "" {
+            imageView.kf.setImage(with: URL.init(string: thumnailImg))
+//            emptyLb.isHidden = true
+//        }else{
+//            emptyLb.isHidden = false
+//        }
+//
     }
     
     private func setUI() {
      
         self.setBorder(color: .clear, width: 0.5, cornerRadius: 5)
         self.dropShadow(color: .black, offSet: CGSize.init(width: 5, height: 5))
-        self.addSubview([todayIndicatorLb, dateLb, imageView])
+        self.addSubview([todayIndicatorLb, dateLb, imageView, emptyLb])
         
         todayIndicatorLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -249,6 +267,7 @@ class ScCollectionViewCell:UICollectionViewCell {
         }
         
         todayIndicatorLb.text = "TODAY"
+        todayIndicatorLb.font = UIFont.AmericanTypeWriter(AmericanTypeWriterFontSize.bold, size: 20)
         self.backgroundColor = .cellBrown
         
         dateLb.snp.makeConstraints { (make) in
@@ -261,6 +280,17 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-10)
         }
+        
+        emptyLb.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalTo(200)
+        }
+        
+        emptyLb.textAlignment = .center
+        emptyLb.text = "오늘의 음악을\n기록하세요"
+        emptyLb.numberOfLines = 0
+        emptyLb.font = UIFont.montserratBold(15)
+        
         imageView.contentMode = .scaleToFill
         
     }

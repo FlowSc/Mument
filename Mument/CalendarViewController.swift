@@ -34,6 +34,7 @@ class CalendarViewController: UIViewController {
         
         if let currentYear = Calendar.current.dateComponents([.year], from: Date()).year {
             yearBtn.setTitle("\(currentYear) 년", for: .normal)
+            selectedYear = currentYear
         }
         
         
@@ -70,8 +71,9 @@ class CalendarViewController: UIViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.isHidden = true
-        yearBtn.setTitleColor(.black, for: .normal)
         
+        yearBtn.setTitleColor(.black, for: .normal)
+        yearBtn.titleLabel?.font = UIFont.AmericanTypeWriter(.bold, size: 20)
         yearBtn.addTarget(self, action: #selector(callPickerView(sender:)), for: .touchUpInside)
 
         yearBtn.shadow()
@@ -141,6 +143,8 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
         
         let vc = MainViewController()
         
+        print(selectedYear, "SELEC")
+        
         
         vc.selectedYear = selectedYear
         vc.selectedMonth = indexPath.row + 1
@@ -170,7 +174,7 @@ class MonthCollectionViewCell:UICollectionViewCell {
         }
         lbl.textColor = .black
         lbl.textAlignment = .center
-        
+        lbl.font = UIFont.AmericanTypeWriter(.bold, size: 30)
         self.setBorder(color: .clear, width: 0.5, cornerRadius: 5)
         self.dropShadow(color: .black, offSet: CGSize.init(width: 5, height: 5))
         self.backgroundColor = .cellBrown
