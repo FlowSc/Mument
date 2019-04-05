@@ -72,13 +72,16 @@ class WelcomeViewController: UIViewController {
                         LoadingIndicator.stop(sender: sender)
                         self.present(vc, animated: true, completion: nil)
                     }else{
-                        LoadingIndicator.stop(sender: sender)
-                        print("Cancel 했을떄")
+                        
+ 
+
                     }
                 }
             }else{
-                LoadingIndicator.stop(sender: sender)
-                self.present(self.alertVc, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    LoadingIndicator.stop(sender: sender)
+                    self.present(self.alertVc, animated: true, completion: nil)
+                }
             }
         }
     }
