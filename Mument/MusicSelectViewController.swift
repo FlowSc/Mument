@@ -27,17 +27,22 @@ class MusicSelectViewController: UIViewController {
         super.viewDidLoad()
        setUI()
         
+        LoadingIndicator.start(vc: self)
+        
         if SKCloudServiceController.authorizationStatus() == .authorized {
             
             if let _token = UserDefaults.standard.string(forKey: "MusicToken") {
                 API.getRecentPlayed(userToken: _token) { (result) in
                     self.recentedPlaylists = result
+                    LoadingIndicator.stop()
                 }
             }else{
+                LoadingIndicator.stop()
                 appleMusicCheck()
             }
             
         }else{
+            LoadingIndicator.stop()
             appleMusicCheck()
         }
     }
@@ -135,6 +140,8 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
         
         if let playlist = recentedPlaylists {
             
+            LoadingIndicator.start(vc: self)
+            
             print(playlist[indexPath.row].type, "TYPE")
             
             API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
@@ -144,8 +151,10 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
                 
                 if let _songs = result {
                     mvc.setData(_songs)
+                    LoadingIndicator.stop()
                     self.navigationController?.pushViewController(mvc, animated: true)
                 }else{
+                    LoadingIndicator.stop()
                     print("No result")
                 }
                

@@ -151,9 +151,7 @@ class DiaryViewController: UIViewController {
         
         
         if let _diary = diary {
-            
-            
-            
+
             try! realm.write {
                 _diary.contents = diaryTv.text
                 _diary.song = _selectedSong
@@ -179,7 +177,7 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func keyboardResign(noti:Notification) {
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += 100
             }
@@ -187,7 +185,7 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func keyboardBegin(noti:Notification) {
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("notification: Keyboard will show")
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= 100
@@ -205,7 +203,6 @@ class DiaryViewController: UIViewController {
 
 extension DiaryViewController:MusicPlayerViewDelegate {
     func play(isSelected: Bool) {
-        print(isSelected)
         
         if isSelected {
             appMusicPlayer.play()

@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootTabVc = MainTabBarViewController()
         
         
-        if let _ = UserDefaults.standard.string(forKey: "MusicToken") {
-            window?.rootViewController = rootTabVc
+        if let _ = UserDefaults.standard.string(forKey: "MusicToken") { // 
+            window?.rootViewController = rootVc
 
         }else{
             window?.rootViewController = rootVc

@@ -68,7 +68,7 @@ struct API {
                 completion!(mapped)
 
 //
-            case .failure(let _):
+            case .failure(_):
                 completion!(nil)
             
             }

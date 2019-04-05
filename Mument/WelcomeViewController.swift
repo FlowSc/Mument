@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import Lottie
 
 class WelcomeViewController: UIViewController {
     
@@ -23,20 +24,20 @@ class WelcomeViewController: UIViewController {
     
     private func setUI() {
         
+        self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview([signInBtn])
         
         self.view.backgroundColor = .white
+    
         
         signInBtn.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
             make.center.equalToSuperview()
         }
-        
+
         signInBtn.setTitle("시작하기", for: .normal)
         signInBtn.setTitleColor(.black, for: .normal)
-        
-//        signInBtn.backgroundColor = .red
-        
+                
         signInBtn.addTarget(self, action: #selector(moveToMain(sender:)), for: .touchUpInside)
         
         let alertAction = UIAlertAction.init(title: "이동", style: UIAlertAction.Style.default) { (action) in
@@ -51,6 +52,8 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc func moveToMain(sender:UIButton) {
+        
+        LoadingIndicator.start(vc: self, sender: sender)
 
         let vc = MainTabBarViewController()
         
@@ -64,25 +67,21 @@ class WelcomeViewController: UIViewController {
                     
                     UserDefaults.standard.set(token, forKey: "MusicToken")
                     
-                    if let _token = token {
+                    if let _ = token {
+                        LoadingIndicator.stop(sender: sender)
                         self.present(vc, animated: true, completion: nil)
                     }else{
+                        LoadingIndicator.stop(sender: sender)
                         print("Cancel 했을떄")
                     }
                 }
-                
             }else{
+                LoadingIndicator.stop(sender: sender)
                 self.present(self.alertVc, animated: true, completion: nil)
             }
         }
     }
 
-    func appleMusicCheck(completion:@escaping (Bool)->()) {
-        
-
-    }
-    
-    
     
     
     /*
