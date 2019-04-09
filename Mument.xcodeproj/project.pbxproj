@@ -23,6 +23,7 @@
 		23ACB11A2256FD2100889366 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1112256FD2100889366 /* Montserrat-Regular.ttf */; };
 		23ACB11C2256FD9800889366 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACB11B2256FD9800889366 /* FontExtension.swift */; };
 		23ACB120225727CD00889366 /* music.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB11F225727CD00889366 /* music.json */; };
+		23ACB123225C439C00889366 /* 2671-sound-visualizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB122225C439C00889366 /* 2671-sound-visualizer.json */; };
 		23CC8B7022408CAC0036A120 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8B6F22408CAC0036A120 /* AppDelegate.swift */; };
 		23CC8B7722408CAE0036A120 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23CC8B7622408CAE0036A120 /* Assets.xcassets */; };
 		23CC8B7A22408CAE0036A120 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23CC8B7822408CAE0036A120 /* LaunchScreen.storyboard */; };
@@ -86,6 +87,7 @@
 		23ACB1112256FD2100889366 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		23ACB11B2256FD9800889366 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		23ACB11F225727CD00889366 /* music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = music.json; sourceTree = "<group>"; };
+		23ACB122225C439C00889366 /* 2671-sound-visualizer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2671-sound-visualizer.json"; sourceTree = "<group>"; };
 		23CC8B6C22408CAC0036A120 /* Mument.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mument.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23CC8B6F22408CAC0036A120 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23CC8B7622408CAE0036A120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				23CC8BBA2248BC390036A120 /* MusicSelectViewController.swift */,
 				23ACB1002256F39600889366 /* 4906-lady-guitar-player.json */,
 				23CC8BCA2255CFE60036A120 /* WelcomeViewController.swift */,
+				23ACB122225C439C00889366 /* 2671-sound-visualizer.json */,
 				23ACB11F225727CD00889366 /* music.json */,
 				23ACB1062256F65A00889366 /* LottieLoadingView.swift */,
 				23ACB0FE2256F32C00889366 /* 5271-loading-4.json */,
@@ -398,6 +401,7 @@
 				23ACB1012256F39600889366 /* 4906-lady-guitar-player.json in Resources */,
 				23ACB120225727CD00889366 /* music.json in Resources */,
 				23ACB11A2256FD2100889366 /* Montserrat-Regular.ttf in Resources */,
+				23ACB123225C439C00889366 /* 2671-sound-visualizer.json in Resources */,
 				23ACB1142256FD2100889366 /* NotoSans-Medium.otf in Resources */,
 				23ACB0FF2256F32C00889366 /* 5271-loading-4.json in Resources */,
 				23ACB1132256FD2100889366 /* NotoSans-Bold.otf in Resources */,

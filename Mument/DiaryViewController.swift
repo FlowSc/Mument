@@ -102,6 +102,13 @@ class DiaryViewController: UIViewController {
         keyboardResigner.addTarget(self, action: #selector(keyboardResignTouched))
         musicPlayerView.delegate = self
         
+        dateLb.font = UIFont.notoMedium(18)
+                
+        let spacing = NSMutableParagraphStyle()
+        spacing.lineSpacing = 7
+        spacing.alignment = .left
+        diaryTv.typingAttributes = [NSAttributedString.Key.paragraphStyle:spacing, NSAttributedString.Key.font : UIFont.notoMedium(13)]
+        
         diaryTv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
             make.centerX.equalToSuperview()
@@ -127,7 +134,6 @@ class DiaryViewController: UIViewController {
 //
         musicPlayerView.shadow()
 //
-//        diaryTv.setBorder(color: .black, width: 0.5, cornerRadius: 3)
         diaryTv.shadow()
 
         dateLb.textColor = .black
@@ -150,7 +156,17 @@ class DiaryViewController: UIViewController {
     
     @objc func tapAddBtn(sender:UIButton) {
         
-        guard let _selectedSong = selectedSong else {return}
+        guard let _selectedSong = selectedSong else {
+            
+            let alertVc = UIAlertController.init(title: "잠깐만요!", message: "오늘의 음악을 선택해주세요!", preferredStyle: .alert)
+            let cancelAction = UIAlertAction.init(title: "확인", style: .cancel, handler: nil)
+            
+            alertVc.addAction(cancelAction)
+            
+            
+            self.present(alertVc, animated: true, completion: nil)
+            
+            return}
         LoadingIndicator.start(vc: self, sender: sender)
         
         
@@ -233,7 +249,7 @@ class MusicPlayerView:UIView {
     private let repeatModeBtn = UIButton()
     private let titleLb = UILabel()
     private let artistLb = UILabel()
-    private let musicAnimView = LOTAnimationView.init(name: "music")
+    private let musicAnimView = LOTAnimationView.init(name: "2671-sound-visualizer")
     
     var isFirstAdd:Bool = true
     var delegate:MusicPlayerViewDelegate?
@@ -298,8 +314,8 @@ class MusicPlayerView:UIView {
         }
         
         musicAnimView.snp.makeConstraints { (make) in
-            make.leading.equalTo(10)
-            make.width.height.equalTo(40)
+            make.centerX.equalTo(thumnailImv)
+            make.width.height.equalTo(30)
             make.centerY.equalTo(playBtn)
         }
 //        musicAnimView.f
@@ -307,7 +323,7 @@ class MusicPlayerView:UIView {
         
         firstAddBtn.snp.makeConstraints { (make) in
             make.bottom.equalTo(-10)
-            make.trailing.equalTo(-10)
+            make.trailing.equalTo(-20)
             make.width.height.equalTo(40)
         }
         
@@ -321,12 +337,17 @@ class MusicPlayerView:UIView {
         playBtn.setImage(UIImage.init(named: "play-button"), for: .normal)
         playBtn.setImage(UIImage.init(named: "pause"), for: .selected)
         
-//        playBtn.backgroundColor = .black
-//        firstAddBtn.backgroundColor = .black
         
         thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
+        
+        titleLb.font = UIFont.notoMedium(15)
         titleLb.text = song.title
+        artistLb.font = UIFont.notoMedium(12)
         artistLb.text = song.artistName
+//        titleLb.
+//        titleLb.setNotoText(song.title, size: 12, textAlignment: .left)
+//        titleLb.text = song.title
+//        artistLb.setNotoText(song.artistName, size: 12, textAlignment: .left)
         
         
     }

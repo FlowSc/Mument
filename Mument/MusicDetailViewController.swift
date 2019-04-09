@@ -34,19 +34,19 @@ class MusicDetailViewController: UIViewController {
         backButton.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeArea.top).offset(10)
             make.leading.equalTo(view.safeArea.leading).offset(10)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(30)
         }
+        backButton.setImage(UIImage.init(named: "left-arrow-1"), for: .normal)
         
+        titleLb.font = UIFont.notoMedium(18)
+
         titleLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.leading.greaterThanOrEqualTo(backButton.snp.trailing)
             make.centerY.equalTo(backButton.snp.centerY)
         }
         
-        titleLb.text = "TITLE"
         titleLb.textAlignment = .center
-        
-        backButton.backgroundColor = .red
         
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(backButton.snp.bottom).offset(10)

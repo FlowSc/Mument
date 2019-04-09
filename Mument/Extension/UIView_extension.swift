@@ -209,6 +209,8 @@ extension UIFont {
     
     static func NotoSans(_ font:NotoSansFontSize, size:CGFloat) -> UIFont {
         
+        print(font.rawValue)
+        print("~~~")
   
         return UIFont.init(name: font.rawValue, size: size)!
         
@@ -220,25 +222,7 @@ extension UIFont {
     }
 }
 
-extension UILabel {
-    
-    
-    
-    func setNotoText(_ text:String, color:UIColor = .black, size:CGFloat, textAlignment:NSTextAlignment, font:NotoSansFontSize = NotoSansFontSize.medium) {
-        
-        self.attributedText = text.makeAttrString(font: UIFont.init(name: font.rawValue, size: size)!, color: color)
-        self.textAlignment = textAlignment
-        self.numberOfLines = 0
-    }
-    
-    func setAmericanTyperWriterText(_ text:String, color:UIColor = .black, size:CGFloat, textAlignment:NSTextAlignment, font:AmericanTypeWriterFontSize = AmericanTypeWriterFontSize.regular) {
-        
-        self.attributedText = text.makeAttrString(font: UIFont.init(name: font.rawValue, size: size)!, color: color)
-        self.textAlignment = textAlignment
-        self.numberOfLines = 0
-    }
-    
-}
+
 
 class CenterAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     

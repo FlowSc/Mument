@@ -49,6 +49,8 @@ final class MusicTableViewCell: UITableViewCell {
     
     func setData(_ song:Song) {
         
+        self.nameLb.font = UIFont.notoMedium(12)
+        self.titleLb.font = UIFont.notoMedium(14)
         self.thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
         self.nameLb.text = song.artistName
         self.nameLb.textColor = .black
