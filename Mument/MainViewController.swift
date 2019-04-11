@@ -18,8 +18,6 @@ let DEVICEWINDOW = UIWindow().frame
 
 class MainViewController: UIViewController {
     
-
-    
     var fromCalendar:Bool = false
     let currentDate = Date()
     let dateLb = UILabel()

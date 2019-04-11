@@ -56,16 +56,12 @@ class DiaryViewController: UIViewController {
         self.selectedSong = diary.song
         self.diary = diary
         
-        
     }
     
     
     private func appleMusicPlayId(_ id:String) {
-        
         appMusicPlayer.setQueue(with: [id])
-        
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -17,7 +17,7 @@ class MusicSelectViewController: UIViewController {
     let searchBar = UISearchBar()
     let titleLb = UILabel()
     var collectionView:UICollectionView!
-    var recentedPlaylists:[Playlist]? {
+    var recentedPlaylists:[MPMediaItemCollection] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -48,6 +48,8 @@ class MusicSelectViewController: UIViewController {
 //    }
     
 
+    let localMedia = MPMediaQuery.playlists()
+
     override func viewDidLoad() {
         super.viewDidLoad()
        setUI()
@@ -57,10 +59,26 @@ class MusicSelectViewController: UIViewController {
         if SKCloudServiceController.authorizationStatus() == .authorized {
             
             if let _token = UserDefaults.standard.string(forKey: "MusicToken") {
-                API.getRecentPlayed(userToken: _token, offset: 20) { (result) in
-                    self.recentedPlaylists = result
-                    LoadingIndicator.stop()
-                }
+                
+                
+                
+                
+                
+                
+                _ = localMedia.collections?.map({
+                    print($0)
+//                    $0.representativeItem?.artwork
+                    self.recentedPlaylists.append($0)
+                    
+//                    print(self.recentedPlaylists?.count)
+                })
+
+                                    LoadingIndicator.stop()
+
+                
+//                API.getRecentPlayed(userToken: _token, offset: 20) { (result) in
+//                    self.recentedPlaylists = result
+//                }
             }else{
                 LoadingIndicator.stop()
                 appleMusicCheck()
@@ -140,9 +158,13 @@ class MusicSelectViewController: UIViewController {
     func appleMusicCheck() {
         
         if let _token = UserDefaults.standard.string(forKey: "MusicToken") {
-            API.getRecentPlayed(userToken: _token, offset: 10, completion: { (result) in
-                self.recentedPlaylists = result
+            
+            _ = localMedia.collections?.map({
+                self.recentedPlaylists.append($0)
             })
+//            API.getRecentPlayed(userToken: _token, offset: 10, completion: { (result) in
+//                self.recentedPlaylists = result
+//            })
         }
     }
     
@@ -150,24 +172,7 @@ class MusicSelectViewController: UIViewController {
 
 extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recentedPlaylists?.count ?? 0
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            //reach bottom
-//            isLoaded = true
-            
-        }
-        
-        if (scrollView.contentOffset.y < 0){
-            //reach top
-        }
-        
-        if (scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y < (scrollView.contentSize.height - scrollView.frame.size.height)){
-            //not top and not bottom
-        }
+        return recentedPlaylists.count
     }
     
     
@@ -177,57 +182,54 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCollectionViewCell", for: indexPath) as! PlaylistCollectionViewCell
         
         
-        if let playlist = recentedPlaylists {
+         let playlist = recentedPlaylists
+            
             cell.setData(playList: playlist[indexPath.row])
-        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let playlist = recentedPlaylists {
+         let playlist = recentedPlaylists[indexPath.row]
             
-            LoadingIndicator.start(vc: self)
+//            LoadingIndicator.start(vc: self)
+        
+//        print(playlist[indexPath.row].items)
+        
+        playlist.items.map({
+            print($0.title)
+            print($0.assetURL)
+            print($0.isCloudItem)
+            print($0.lastPlayedDate)
+            print($0.playbackStoreID)
+            print("~~~~~~~~")
             
-            print(playlist[indexPath.row].type, "TYPE")
+        })
+        
+//            print(playlist[indexPath.row].type, "TYPE")
             
-            API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
-
-                let mvc = MusicDetailViewController()
-                
-                mvc.titleLb.text = playlist[indexPath.row].name
-                
-                if let _songs = result { // apple Music 으로
-                    mvc.setData(_songs)
-                    LoadingIndicator.stop()
-                    self.navigationController?.pushViewController(mvc, animated: true)
-                }else{ // 얘네는 라이브러리에서 불러오는 애들임
-                    
-    
-                    let localMedia = MPMediaQuery.playlists().collections
-                    
-//                    print(localMedia.map)
-
-                    localMedia?.map({print($0.mediaTypes)})
-                    
-                    
-                
-                    
-                    
-                    
-                    
-                
-                    
-                    LoadingIndicator.stop()
-                    print("No result")
-                }
-               
-            }
-        }
+//            API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
+//
+//                let mvc = MusicDetailViewController()
+//
+//                mvc.titleLb.text = playlist[indexPath.row].name
+//
+//                if let _songs = result { // apple Music 으로
+//                    mvc.setData(_songs)
+//                    LoadingIndicator.stop()
+//                    self.navigationController?.pushViewController(mvc, animated: true)
+//                }else{ // 얘네는 라이브러리에서 불러오는 애들임
+//
+//
+//
+//                    LoadingIndicator.stop()
+//                    print("No result")
+//                }
+//
+//            }
         
 
-        
     }
     
 }
@@ -272,18 +274,19 @@ final class PlaylistCollectionViewCell:UICollectionViewCell {
         
     }
     
-    func setData(playList:Playlist) {
+    func setData(playList:MPMediaItemCollection) {
         
-        self.thumnailImv.kf.setImage(with: URL.init(string: playList.thumnailUrl)!)
+        self.thumnailImv.image = playList.representativeItem?.artwork?.image(at: CGSize.init(width: 100, height: 100))
+//        self.thumnailImv.kf.setImage(with: URL.init(string: playList.thumnailUrl)!)
         
-        if playList.curatorName == "" {
-            self.nameLb.text = playList.artistName
-
-        }else{
-            self.nameLb.text = playList.curatorName
-
-        }
-        self.titleLb.text = playList.name
+//        if playList.curatorName == "" {
+//            self.nameLb.text = playList.value(forProperty: MPMediaPlaylistPropertyName)!
+//
+//        }else{
+//            self.nameLb.text = playList.curatorName
+//
+//        }
+        self.titleLb.text = playList.value(forProperty: MPMediaPlaylistPropertyName) as! String
         
     }
     
