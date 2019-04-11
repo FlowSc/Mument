@@ -120,7 +120,7 @@ class MusicSelectViewController: UIViewController {
         }
         
         titleLb.font = UIFont.notoMedium(18)
-        titleLb.text = "최근 재생한 음악들"
+        titleLb.text = "나의 음악들"
         
         searchBar.snp.makeConstraints { (make) in
             make.top.equalTo(dismissBtn.snp.bottom).offset(10)
@@ -131,7 +131,6 @@ class MusicSelectViewController: UIViewController {
         searchBar.isHidden  = true
         
         collectionView.snp.makeConstraints { (make) in
-//            make.edges.equalTo(view.safeArea.edges)
             make.top.equalTo(dismissBtn.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeArea.bottom)
@@ -181,7 +180,6 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlaylistCollectionViewCell", for: indexPath) as! PlaylistCollectionViewCell
         
-        
          let playlist = recentedPlaylists
             
             cell.setData(playList: playlist[indexPath.row])
@@ -199,19 +197,24 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
         
         playlist.items.map({
             print($0.title)
-            print($0.assetURL)
+            print($0.assetURL) // 이게 nil 값이면 애플뮤직으로 들은 노래고 값이 있으면 다운받아서 가지고 있는 노래임!
             print($0.isCloudItem)
             print($0.lastPlayedDate)
-            print($0.playbackStoreID)
+            print($0.playbackStoreID) // 이게 0이 아니면 애플뮤직으로 들었던 노래들이고 assetURL이 존재함!
             print("~~~~~~~~")
             
         })
+        
+                        let mvc = MusicDetailViewController()
+        
+        
+//        mvc.setData(<#T##songs: [Song]##[Song]#>)
+
         
 //            print(playlist[indexPath.row].type, "TYPE")
             
 //            API.getMusicsFromPlaylist(userToken: UserDefaults.standard.string(forKey: "MusicToken")!, storefront: "kr", type: playlist[indexPath.row].type, id: playlist[indexPath.row].playId) { (result) in
 //
-//                let mvc = MusicDetailViewController()
 //
 //                mvc.titleLb.text = playlist[indexPath.row].name
 //

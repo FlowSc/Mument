@@ -42,7 +42,6 @@ class DiaryViewController: UIViewController {
     var dateId:String = ""
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
