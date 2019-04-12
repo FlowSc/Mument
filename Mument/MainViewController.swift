@@ -164,21 +164,21 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
   
         if fromCalendar {
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", selectedSong: cellItem.song!)
                 cell.emptyLb.isHidden = true
 
             }else{
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", thumnailImg: "")
+                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", selectedSong: nil)
                 cell.emptyLb.isHidden = false
 
             }
         }else{
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(calendar.year!)\((calendar.month!).addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: cellItem.song!.artworkUrl)
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", selectedSong: cellItem.song!)
                 cell.emptyLb.isHidden = true
 
             }else{
-                  cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", thumnailImg: "")
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", selectedSong: nil)
                 cell.emptyLb.isHidden = false
                 
             }
@@ -243,18 +243,27 @@ class ScCollectionViewCell:UICollectionViewCell {
         setUI()
     }
     
-    func setData(isToday:Bool, date:String, thumnailImg:String) {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.image = nil
+    }
+    
+    func setData(isToday:Bool, date:String, selectedSong:Song?) {
         
         todayIndicatorLb.isHidden = !isToday
         dateLb.text = date
         dateLb.font = UIFont.AmericanTypeWriter(.regular, size: 20)
         
-//        if thumnailImg != "" {
-            imageView.kf.setImage(with: URL.init(string: thumnailImg))
-//            emptyLb.isHidden = true
-//        }else{
-//            emptyLb.isHidden = false
-//        }
+        
+        if let _selected = selectedSong {
+            if _selected.artworkUrl != "" {
+                imageView.kf.setImage(with: URL.init(string: _selected.artworkUrl))
+            }else {
+                imageView.image = UIImage.init(data: _selected.localImage!)
+            }
+        }
+        
 //
     }
     

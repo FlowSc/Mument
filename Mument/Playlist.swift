@@ -56,6 +56,7 @@ class Song:Object, Mappable {
     @objc dynamic var id:String = ""
     @objc dynamic var albumName:String = ""
     @objc dynamic var lastPlayedDate:Date?
+    @objc dynamic var isPlaybackId:Bool = false
     
     var localItem:MPMediaItem?
     @objc dynamic var localImage:Data?
@@ -83,7 +84,15 @@ class Song:Object, Mappable {
         self.title = item.title ?? ""
         self.url = item.assetURL?.absoluteString ?? ""
         
-        self.id = item.playbackStoreID
+        if item.playbackStoreID != "0" {
+            self.id = item.playbackStoreID
+            isPlaybackId = true
+
+        }else{
+            self.id = "\(item.persistentID)"
+            isPlaybackId = false
+
+        }
        
         self.localImage = item.artwork?.image(at: CGSize.init(width: 640, height: 640))?.pngData()
         self.lastPlayedDate = item.lastPlayedDate

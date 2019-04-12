@@ -69,8 +69,19 @@ class DiaryViewController: UIViewController {
     private func appleMusicPlayId(_ id:String) {
         
         if id != "0" {
-            appMusicPlayer.setQueue(with: [id])
-
+            
+            if let _selected = selectedSong {
+                
+        
+                if _selected.url != "" {
+                    appMusicPlayer.setQueue(with: [id])
+                }else{
+                    if let localSong = findSongWithPersistentIdString(persistentIDString: _selected.id) {
+                        print("~~~LOCAL")
+                        appMusicPlayer.setQueue(with: MPMediaItemCollection.init(items: [localSong]))
+                    }
+                }
+            }
         }else{
             
             if let _selected = selectedSong {
@@ -301,26 +312,34 @@ extension DiaryViewController:MPMediaPickerControllerDelegate {
             
             print(media.hasProtectedAsset)
             
-            if let assetUrl = media.assetURL {
-                let song = Song.init(item: mediaItemCollection.items.first!)
+            print(media.persistentID)
+            print("VV")
+            
+//                    MPMediaQuery().get
+                let song = Song.init(item: media)
                 
-                print(assetUrl)
                 selectedSong = song
                 
                 mediaPicker.dismiss(animated: true, completion: nil)
 
-            }else{
-                
-            }
-            
-
+   
         }
-        
 
-        
-
-        
     }
+    
+    func findSongWithPersistentIdString(persistentIDString: String) -> MPMediaItem? {
+        let predicate = MPMediaPropertyPredicate(value: persistentIDString, forProperty: MPMediaItemPropertyPersistentID)
+        let songQuery = MPMediaQuery()
+        songQuery.addFilterPredicate(predicate)
+        
+        var song: MPMediaItem?
+        if let items = songQuery.items, items.count > 0 {
+            song = items[0]
+        }
+        return song
+    }
+    
+
     
 }
 
