@@ -202,6 +202,7 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
             print($0.lastPlayedDate)
             print($0.playbackStoreID) // 이게 0이 아니면 애플뮤직으로 들었던 노래들이고 assetURL이 존재함!
             print("~~~~~~~~")
+            Song.init(item: $0)
             
         })
         

@@ -10,6 +10,7 @@ import Foundation
 import ObjectMapper
 import Realm
 import RealmSwift
+import MediaPlayer
 
 class Playlist:Object, Mappable {
     
@@ -51,10 +52,13 @@ class Song:Object, Mappable {
     @objc dynamic var artistName:String = ""
     @objc dynamic var title:String = ""
     @objc dynamic var url:String = ""
-    @objc dynamic var type:String = ""
     @objc dynamic var artworkUrl:String = ""
     @objc dynamic var id:String = ""
     @objc dynamic var albumName:String = ""
+    @objc dynamic var lastPlayedDate:Date?
+    
+    var localItem:MPMediaItem?
+    @objc dynamic var localImage:UIImage?
     
     func mapping(map: Map) {
         
@@ -65,6 +69,21 @@ class Song:Object, Mappable {
         artworkUrl <- map["attributes.artwork.url"]
         self.artworkUrl = convertThumnailUrl(url: artworkUrl)
         id <- map["id"]
+
+    }
+    
+    
+    
+    convenience init(item:MPMediaItem) {
+        self.init()
+        
+        self.localItem = item
+        self.artistName = item.artist ?? ""
+        self.title = item.title ?? ""
+        self.url = item.assetURL?.absoluteString ?? ""
+        self.id = item.playbackStoreID
+        self.localImage = item.artwork?.image(at: CGSize.init(width: 640, height: 640))
+        self.lastPlayedDate = item.lastPlayedDate
 
     }
     
