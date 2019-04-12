@@ -17,16 +17,19 @@ let realm = try! Realm()
 
 class DiaryViewController: UIViewController {
     
+    let musicPicker = MPMediaPickerController.init(mediaTypes: .anyAudio)
     
     let appMusicPlayer = MPMusicPlayerController.applicationMusicPlayer
-    let avPlayer = AVPlayer()
-    
+    var avPlayer:AVPlayer?
     
     var selectedSong:Song? {
         didSet {
             if let _selected = selectedSong {
+                
+                
                     appleMusicPlayId(_selected.id)
                     musicPlayerView.setMusicPlayer(song: _selected)
+
             
             
             }
@@ -49,6 +52,7 @@ class DiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        musicPicker.delegate = self
         setAction()
         setNotifications()
     }
@@ -63,7 +67,19 @@ class DiaryViewController: UIViewController {
     
     
     private func appleMusicPlayId(_ id:String) {
-        appMusicPlayer.setQueue(with: [id])
+        
+        if id != "0" {
+            appMusicPlayer.setQueue(with: [id])
+
+        }else{
+            
+            if let _selected = selectedSong {
+                let playItem = AVPlayerItem.init(url: URL.init(string: _selected.url)!)
+                
+                avPlayer = AVPlayer.init(playerItem: playItem)
+
+            }
+        }
     }
     private func localPusicPlay(song:Song) {
 //        systemMusicPlayer
@@ -229,24 +245,83 @@ class DiaryViewController: UIViewController {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        avPlayer = nil
+        appMusicPlayer.stop()
+    }
+    
 }
 
 extension DiaryViewController:MusicPlayerViewDelegate {
     func play(isSelected: Bool) {
         
         if isSelected {
-            appMusicPlayer.play()
+            
+        
+            if let selected = selectedSong {
+                
+                if selected.id != "0" {
+                    appMusicPlayer.play()
+                }else{
+                    avPlayer?.play()
+                }
+            }
+            
         }else{
-            appMusicPlayer.pause()
+            if let selected = selectedSong {
+                
+                if selected.id != "0" {
+                    appMusicPlayer.stop()
+                }else{
+                    avPlayer?.pause()
+                }
+            }
         }
     }
     
     func addMusic() {
-        let msvc = MusicSelectViewController()
         
-        let selectedVc = UINavigationController.init(rootViewController: msvc)
-        self.present(selectedVc, animated: true, completion: nil)
+        self.present(musicPicker, animated: true, completion: nil)
+
     }
+}
+
+extension DiaryViewController:MPMediaPickerControllerDelegate {
+    
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        mediaPicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        print(mediaItemCollection)
+        
+        if let media = mediaItemCollection.items.first {
+            
+            
+            print(media.hasProtectedAsset)
+            
+            if let assetUrl = media.assetURL {
+                let song = Song.init(item: mediaItemCollection.items.first!)
+                
+                print(assetUrl)
+                selectedSong = song
+                
+                mediaPicker.dismiss(animated: true, completion: nil)
+
+            }else{
+                
+            }
+            
+
+        }
+        
+
+        
+
+        
+    }
+    
 }
 
 class MusicPlayerView:UIView {
