@@ -11,6 +11,7 @@ import MediaPlayer
 import RealmSwift
 import Realm
 import Lottie
+import AVKit
 
 let realm = try! Realm()
 
@@ -18,13 +19,16 @@ class DiaryViewController: UIViewController {
     
     
     let appMusicPlayer = MPMusicPlayerController.applicationMusicPlayer
-    let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer
+    let avPlayer = AVPlayer()
+    
     
     var selectedSong:Song? {
         didSet {
             if let _selected = selectedSong {
-                appleMusicPlayId(_selected.id)
-                musicPlayerView.setMusicPlayer(song: _selected)
+                    appleMusicPlayId(_selected.id)
+                    musicPlayerView.setMusicPlayer(song: _selected)
+            
+            
             }
         }
     }
@@ -61,9 +65,20 @@ class DiaryViewController: UIViewController {
     private func appleMusicPlayId(_ id:String) {
         appMusicPlayer.setQueue(with: [id])
     }
+    private func localPusicPlay(song:Song) {
+//        systemMusicPlayer
+//        appMusicPlayer
+//        systemMusicPlayer.setQueue(with: song.localItem!)
+    
+//        appMusicPlayer.setQueue(with: song.localItem.)
+        
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        print(selectedSong)
     }
     
     private func setNotifications() {
@@ -161,7 +176,8 @@ class DiaryViewController: UIViewController {
             
             self.present(alertVc, animated: true, completion: nil)
             
-            return}
+            return
+        }
         LoadingIndicator.start(vc: self, sender: sender)
         
         
@@ -267,7 +283,6 @@ class MusicPlayerView:UIView {
         firstAddBtn.setImage(UIImage.init(named: "add"), for: .normal)
         self.layoutIfNeeded()
         self.layoutSubviews()
-
         
     }
     

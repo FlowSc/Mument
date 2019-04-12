@@ -190,26 +190,35 @@ extension MusicSelectViewController:UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
          let playlist = recentedPlaylists[indexPath.row]
-            
+        
+        var songs:[Song] = []
 //            LoadingIndicator.start(vc: self)
         
 //        print(playlist[indexPath.row].items)
         
         playlist.items.map({
             print($0.title)
+            print($0.value(forProperty: MPMediaItemPropertyAssetURL))
             print($0.assetURL) // 이게 nil 값이면 애플뮤직으로 들은 노래고 값이 있으면 다운받아서 가지고 있는 노래임!
             print($0.isCloudItem)
             print($0.lastPlayedDate)
             print($0.playbackStoreID) // 이게 0이 아니면 애플뮤직으로 들었던 노래들이고 assetURL이 존재함!
             print("~~~~~~~~")
-            Song.init(item: $0)
+            let song = Song.init(item: $0)
+            
+            songs.append(song)
+            
             
         })
         
                         let mvc = MusicDetailViewController()
         
+        mvc.setData(songs)
         
-//        mvc.setData(<#T##songs: [Song]##[Song]#>)
+        self.navigationController?.pushViewController(mvc, animated: true)
+        
+        
+        
 
         
 //            print(playlist[indexPath.row].type, "TYPE")

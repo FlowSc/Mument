@@ -58,7 +58,7 @@ class Song:Object, Mappable {
     @objc dynamic var lastPlayedDate:Date?
     
     var localItem:MPMediaItem?
-    @objc dynamic var localImage:UIImage?
+    @objc dynamic var localImage:Data?
     
     func mapping(map: Map) {
         
@@ -78,11 +78,19 @@ class Song:Object, Mappable {
         self.init()
         
         self.localItem = item
+        
+        print(localItem)
+        print("LOCALITEM")
         self.artistName = item.artist ?? ""
         self.title = item.title ?? ""
         self.url = item.assetURL?.absoluteString ?? ""
-        self.id = item.playbackStoreID
-        self.localImage = item.artwork?.image(at: CGSize.init(width: 640, height: 640))
+        
+        if item.playbackStoreID != "0" {
+            self.id = item.playbackStoreID
+        }else{
+//            self.id = item.pers
+        }
+        self.localImage = item.artwork?.image(at: CGSize.init(width: 640, height: 640))?.pngData()
         self.lastPlayedDate = item.lastPlayedDate
 
     }
