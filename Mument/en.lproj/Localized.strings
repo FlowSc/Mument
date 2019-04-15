@@ -5,12 +5,13 @@
   Created by Seongchan Kang on 15/04/2019.
   Copyright © 2019 seongchan. All rights reserved.
 */
-"slogan" = "Moment with Music";
+"slogan" = "- Moment with Music -";
 "askDeveloper" = "Ask to Developer";
 "versionInfo" = "Version Info";
 "warning" = "Warning!";
 "warningInfo" = "Please select today Music";
 "confirm" = "Confirm";
+"start" = "START";
 "EmptyLabel" = "Record\nyour Mument";
 "Jan" = "Jan";
 "Feb" = "Feb";
@@ -25,3 +26,5 @@
 "Nov" = "Nov";
 "Dec" = "Dec";
 "config" = "Config";
+"move" = "move";
+"cancel" = "cancel";

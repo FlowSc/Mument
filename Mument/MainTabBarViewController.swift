@@ -105,7 +105,13 @@ class MainTabBarViewController: UITabBarController {
 
 extension UIButton {
     func setImageEdge() {
-        self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 50, bottom: 10, right: 50)
+        
+        if DEVICEWINDOW.height > 600 {
+            self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 50, bottom: 10, right: 50)
+
+        }else{
+            self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 40, bottom: 10, right: 40)
+        }
     }
 }
 

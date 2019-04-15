@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Mument
+
+  Created by Seongchan Kang on 15/04/2019.
+  Copyright © 2019 seongchan. All rights reserved.
+*/
+"CFBundleDisplayName" = "Mument";
+"CFBundleName" = "Mument";
+"NSAppleMusicUsageDescription" = "I agree to access the Apple Music Archive for viewing recently played music";

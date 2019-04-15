@@ -16,6 +16,7 @@ class WelcomeViewController: UIViewController {
     private let signInBtn = UIButton()
     private let sloganLb = UILabel()
     private let alertVc = UIAlertController.init(title: "현재 애플뮤직 접근 설정에 동의하지 않았습니다", message: "설정에서 접근 동의를 해주세요", preferredStyle: UIAlertController.Style.alert)
+    private let copyRightLb = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,7 @@ class WelcomeViewController: UIViewController {
     private func setUI() {
         
         self.navigationController?.isNavigationBarHidden = true
-        self.view.addSubview([signInBtn, mainImgView, sloganLb])
+        self.view.addSubview([signInBtn, mainImgView, sloganLb, copyRightLb])
         
         self.view.backgroundColor = .backgroundBrown
     
@@ -34,38 +35,57 @@ class WelcomeViewController: UIViewController {
         
         mainImgView.snp.makeConstraints { (make) in
             make.width.height.equalTo(300)
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-40)
         }
         mainImgView.contentMode = .scaleAspectFit
         
         sloganLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(mainImgView.snp.bottom).offset(0)
+            make.top.equalTo(mainImgView.snp.bottom).offset(-10)
         }
         
         signInBtn.snp.makeConstraints { (make) in
-            make.width.height.equalTo(100)
-            make.top.equalTo(sloganLb.snp.bottom).offset(10)
+            make.width.equalTo(200)
+            make.height.equalTo(50)
+            make.top.equalTo(sloganLb.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
         }
         
         sloganLb.textAlignment = .center
-        sloganLb.font = UIFont.notoMedium(20)
+        sloganLb.font = UIFont.AmericanTypeWriter(.regular, size: 20)
         
-        sloganLb.text = "음악과 함께하는 순간"
-
-        signInBtn.setTitle("시작하기", for: .normal)
-        signInBtn.titleLabel?.font = UIFont.notoMedium(23)
+        signInBtn.backgroundColor = .backgroundBrown
+//        signInBtn.setBorder(color: .black, width: 0.1, cornerRadius: 3)
+        signInBtn.shadow()
+        
+        sloganLb.text = "slogan".localized
+        sloganLb.numberOfLines = 1
+        sloganLb.adjustsFontSizeToFitWidth = true
+        signInBtn.setTitle("start".localized, for: .normal)
+        signInBtn.titleLabel?.font = UIFont.AmericanTypeWriter(.bold, size: 25)
         signInBtn.setTitleColor(.black, for: .normal)
+        
+        copyRightLb.snp.makeConstraints { (make) in
+            make.bottom.equalTo(-20)
+            make.leading.equalTo(10)
+            make.centerX.equalToSuperview()
+        }
+        
+        copyRightLb.adjustsFontSizeToFitWidth = true
+        copyRightLb.textAlignment = .center
+        
+        copyRightLb.text = "Copyright 2019. Seongchan Kang. All right reserved"
                 
         signInBtn.addTarget(self, action: #selector(moveToMain(sender:)), for: .touchUpInside)
-        
-        let alertAction = UIAlertAction.init(title: "이동", style: UIAlertAction.Style.default) { (action) in
+        copyRightLb.font = UIFont.AmericanTypeWriter(.regular, size: 15)
+
+        let alertAction = UIAlertAction.init(title: "move".localized, style: UIAlertAction.Style.default) { (action) in
                     if UIApplication.shared.canOpenURL(URL.init(string:  UIApplication.openSettingsURLString)!) {
                         UIApplication.shared.openURL(URL.init(string:  UIApplication.openSettingsURLString)!)
                     }
         }
-        let cancelAction = UIAlertAction.init(title: "취소", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.init(title: "cancel".localized, style: .cancel, handler: nil)
         alertVc.addAction(alertAction)
         alertVc.addAction(cancelAction)
         
