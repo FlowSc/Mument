@@ -280,7 +280,12 @@ class ScCollectionViewCell:UICollectionViewCell {
             if _selected.artworkUrl != "" {
                 imageView.kf.setImage(with: URL.init(string: _selected.artworkUrl))
             }else {
-                imageView.image = UIImage.init(data: _selected.localImage!)
+                if let imageData = _selected.localImage {
+                    imageView.image = UIImage.init(data: imageData)
+                }else{
+                    imageView.image = UIImage()
+                }
+                
             }
         }else{
             artistLb.isHidden = true

@@ -64,7 +64,7 @@ class CalendarViewController: UIViewController {
         
         pickerView.snp.makeConstraints { (make) in
             make.leading.equalTo(yearBtn.snp.trailing).offset(10)
-            make.top.equalTo(yearBtn.snp.top).offset(-5)
+            make.top.equalTo(yearBtn.snp.top).offset(-10)
             make.width.equalTo(100)
             make.height.equalTo(100)
         }
@@ -77,6 +77,7 @@ class CalendarViewController: UIViewController {
         yearBtn.addTarget(self, action: #selector(callPickerView(sender:)), for: .touchUpInside)
 
         yearBtn.shadow()
+//        pickerView.font
         yearBtn.backgroundColor = .cellBrown
 //
     }
@@ -99,8 +100,21 @@ extension CalendarViewController:UIPickerViewDelegate, UIPickerViewDataSource {
         return 50
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(2019 + row) 년"
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return "\(2019 + row) 년"
+//    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        let lbl = UILabel()
+        
+        lbl.font = UIFont.notoMedium(20)
+        lbl.textAlignment = .center
+        
+        lbl.text = "\(2019 + row) 년"
+        
+        return lbl
+        
     }
     
     
@@ -132,18 +146,14 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
         
         if DEVICEWINDOW.height < 600 {
             return CGSize.init(width: 80, height: 80)
-
         }else{
             return CGSize.init(width: 100, height: 100)
-
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = MainViewController()
-        
-        print(selectedYear, "SELEC")
         
         
         vc.selectedYear = selectedYear

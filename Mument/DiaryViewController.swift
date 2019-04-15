@@ -439,7 +439,12 @@ class MusicPlayerView:UIView {
             if song.artworkUrl != "" {
                 thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
             }else {
-                thumnailImv.image = UIImage.init(data: song.localImage!)
+                
+                if let imageData = song.localImage {
+                    thumnailImv.image = UIImage.init(data: imageData)
+                }else{
+                    thumnailImv.image = UIImage()
+                }
             }
 
     }

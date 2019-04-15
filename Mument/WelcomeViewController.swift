@@ -14,7 +14,8 @@ class WelcomeViewController: UIViewController {
     
     private let mainImgView = UIImageView()
     private let signInBtn = UIButton()
-    let alertVc = UIAlertController.init(title: "현재 애플뮤직 접근 설정에 동의하지 않았습니다", message: "설정에서 접근 동의를 해주세요", preferredStyle: UIAlertController.Style.alert)
+    private let sloganLb = UILabel()
+    private let alertVc = UIAlertController.init(title: "현재 애플뮤직 접근 설정에 동의하지 않았습니다", message: "설정에서 접근 동의를 해주세요", preferredStyle: UIAlertController.Style.alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +26,36 @@ class WelcomeViewController: UIViewController {
     private func setUI() {
         
         self.navigationController?.isNavigationBarHidden = true
-        self.view.addSubview([signInBtn])
+        self.view.addSubview([signInBtn, mainImgView, sloganLb])
         
         self.view.backgroundColor = .backgroundBrown
     
+        mainImgView.image = UIImage.init(named: "logo_transparent")
+        
+        mainImgView.snp.makeConstraints { (make) in
+            make.width.height.equalTo(300)
+            make.center.equalToSuperview()
+        }
+        mainImgView.contentMode = .scaleAspectFit
+        
+        sloganLb.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(mainImgView.snp.bottom).offset(0)
+        }
         
         signInBtn.snp.makeConstraints { (make) in
             make.width.height.equalTo(100)
-            make.center.equalToSuperview()
+            make.top.equalTo(sloganLb.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
         }
+        
+        sloganLb.textAlignment = .center
+        sloganLb.font = UIFont.notoMedium(20)
+        
+        sloganLb.text = "음악과 함께하는 순간"
 
         signInBtn.setTitle("시작하기", for: .normal)
-        signInBtn.titleLabel?.font = UIFont.notoMedium(20)
+        signInBtn.titleLabel?.font = UIFont.notoMedium(23)
         signInBtn.setTitleColor(.black, for: .normal)
                 
         signInBtn.addTarget(self, action: #selector(moveToMain(sender:)), for: .touchUpInside)
