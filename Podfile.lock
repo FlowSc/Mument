@@ -68,6 +68,7 @@ DEPENDENCIES:
   - Alamofire
   - Cider (~> 0.10)
   - Firebase
+  - Firebase/Core
   - Kingfisher
   - lottie-ios
   - ObjectMapper
@@ -116,6 +117,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 0442e82950828fb396c8c8dd7fc8fd1f30f37b1b
+PODFILE CHECKSUM: 318dd410baffac9bba75878eacb1a3152208ccd6
 
 COCOAPODS: 1.6.0.beta.2

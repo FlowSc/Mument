@@ -17,6 +17,7 @@ target 'Mument' do
 	pod 'RealmSwift'
 	pod "ScrollableStackView"
 	pod 'lottie-ios'
+	pod 'Firebase/Core'
 
   target 'MumentTests' do
     inherit! :search_paths
