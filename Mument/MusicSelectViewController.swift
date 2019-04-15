@@ -34,26 +34,16 @@ class MusicSelectViewController: UIViewController {
         if SKCloudServiceController.authorizationStatus() == .authorized {
             
             if let _token = UserDefaults.standard.string(forKey: "MusicToken") {
-                
-                
-                
-                
-                
-                
+
                 _ = localMedia.collections?.map({
                     print($0)
-//                    $0.representativeItem?.artwork
                     self.recentedPlaylists.append($0)
                     
-//                    print(self.recentedPlaylists?.count)
                 })
 
-                                    LoadingIndicator.stop()
+                    LoadingIndicator.stop()
 
-                
-//                API.getRecentPlayed(userToken: _token, offset: 20) { (result) in
-//                    self.recentedPlaylists = result
-//                }
+
             }else{
                 LoadingIndicator.stop()
                 appleMusicCheck()

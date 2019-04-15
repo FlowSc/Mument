@@ -48,6 +48,8 @@ class MainViewController: UIViewController {
             dateLb.text = "\(calendar.year!)년 \(calendar.month!)월"
             monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
             
+            print(monthLength, "MONTHLENGTH!")
+            
             monthlyDiaries.removeAll()
             
             for i in 1...monthLength! {
@@ -70,6 +72,12 @@ class MainViewController: UIViewController {
             backBtn.setImage(UIImage.init(named: "left-arrow-1"), for: .normal)
             
             dateLb.text = "\(selectedYear)년 \(selectedMonth)월"
+            
+            monthLength = lastDay(ofMonth: selectedMonth, year: selectedYear)
+
+            print(monthLength, "MONTHLENGTH!")
+
+            
             backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
             monthlyDiaries.removeAll()
             
@@ -292,6 +300,8 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-10)
         }
+        
+        imageView.setBorder(color: UIColor.clear, width: 0.5, cornerRadius: 3)
         
         emptyLb.snp.makeConstraints { (make) in
             make.center.equalToSuperview()

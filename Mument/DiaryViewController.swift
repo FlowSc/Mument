@@ -270,7 +270,6 @@ extension DiaryViewController:MusicPlayerViewDelegate {
                 }else{
                     appMusicPlayer.play()
                 }
-
             }
             
         }else{
@@ -436,12 +435,13 @@ class MusicPlayerView:UIView {
         titleLb.text = song.title
         artistLb.font = UIFont.notoMedium(12)
         artistLb.text = song.artistName
-//        titleLb.
-//        titleLb.setNotoText(song.title, size: 12, textAlignment: .left)
-//        titleLb.text = song.title
-//        artistLb.setNotoText(song.artistName, size: 12, textAlignment: .left)
         
-        
+            if song.artworkUrl != "" {
+                thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
+            }else {
+                thumnailImv.image = UIImage.init(data: song.localImage!)
+            }
+
     }
     
     @objc func addMusicTouched(sender:UIButton) {
