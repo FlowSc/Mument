@@ -86,6 +86,9 @@ class Song:Object, Mappable {
         
         if item.playbackStoreID != "0" {
             self.id = item.playbackStoreID
+            
+            print(item.playbackStoreID, "PLAYBACK")
+            print(item.persistentID, "PERSISTENT")
             isPlaybackId = true
 
         }else{

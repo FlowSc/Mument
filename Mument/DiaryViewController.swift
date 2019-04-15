@@ -27,7 +27,7 @@ class DiaryViewController: UIViewController {
             if let _selected = selectedSong {
                 
                 
-                    appleMusicPlayId(_selected.id)
+                    appleMusicPlayId(_selected)
                     musicPlayerView.setMusicPlayer(song: _selected)
 
             
@@ -66,32 +66,26 @@ class DiaryViewController: UIViewController {
     }
     
     
-    private func appleMusicPlayId(_ id:String) {
+    private func appleMusicPlayId(_ song:Song) {
         
-        if id != "0" {
+        if song.isPlaybackId {
             
-            if let _selected = selectedSong {
-                
-        
-                if _selected.url != "" {
-                    appMusicPlayer.setQueue(with: [id])
-                }else{
-                    if let localSong = findSongWithPersistentIdString(persistentIDString: _selected.id) {
-                        print("~~~LOCAL")
-                        appMusicPlayer.setQueue(with: MPMediaItemCollection.init(items: [localSong]))
-                    }
-                }
-            }
+            appMusicPlayer.setQueue(with: [song.id])
+            
         }else{
             
-            if let _selected = selectedSong {
-                let playItem = AVPlayerItem.init(url: URL.init(string: _selected.url)!)
-                
+            if let url = URL.init(string: song.url) {
+                let playItem = AVPlayerItem.init(url: url)
                 avPlayer = AVPlayer.init(playerItem: playItem)
 
+            }else{
+                if let localSong = findSongWithPersistentIdString(persistentIDString: song.id) {
+                    appMusicPlayer.setQueue(with: MPMediaItemCollection.init(items: [localSong]))
+                }
             }
         }
     }
+    
     private func localPusicPlay(song:Song) {
 //        systemMusicPlayer
 //        appMusicPlayer
@@ -268,24 +262,24 @@ extension DiaryViewController:MusicPlayerViewDelegate {
     func play(isSelected: Bool) {
         
         if isSelected {
-            
         
-            if let selected = selectedSong {
+            if let _ = selectedSong {
                 
-                if selected.id != "0" {
-                    appMusicPlayer.play()
+                if let localPlayer = avPlayer {
+                    localPlayer.play()
                 }else{
-                    avPlayer?.play()
+                    appMusicPlayer.play()
                 }
+
             }
             
         }else{
-            if let selected = selectedSong {
+            if let _ = selectedSong {
                 
-                if selected.id != "0" {
-                    appMusicPlayer.stop()
+                if let localPlayer = avPlayer {
+                    localPlayer.pause()
                 }else{
-                    avPlayer?.pause()
+                    appMusicPlayer.pause()
                 }
             }
         }
@@ -310,12 +304,6 @@ extension DiaryViewController:MPMediaPickerControllerDelegate {
         if let media = mediaItemCollection.items.first {
             
             
-            print(media.hasProtectedAsset)
-            
-            print(media.persistentID)
-            print("VV")
-            
-//                    MPMediaQuery().get
                 let song = Song.init(item: media)
                 
                 selectedSong = song
