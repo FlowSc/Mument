@@ -27,7 +27,8 @@ class MainViewController: UIViewController {
     var selectedYear:Int = 0
     let backBtn = UIButton()
     var monthlyDiaries:[Diary] = []
-    
+    private let months:[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -45,11 +46,9 @@ class MainViewController: UIViewController {
         if !fromCalendar {
             let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
             
-            dateLb.text = "\(calendar.year!)년 \(calendar.month!)월"
+            dateLb.text = "\(months[calendar.month! - 1].localized), \(calendar.year!)"
             monthLength = lastDay(ofMonth: calendar.month!, year: calendar.year!)
-            
-            print(monthLength, "MONTHLENGTH!")
-            
+                        
             monthlyDiaries.removeAll()
             
             for i in 1...monthLength! {
@@ -71,11 +70,10 @@ class MainViewController: UIViewController {
             }
             backBtn.setImage(UIImage.init(named: "left-arrow-1"), for: .normal)
             
-            dateLb.text = "\(selectedYear)년 \(selectedMonth)월"
+            dateLb.text = "\(months[selectedMonth - 1].localized), \(selectedYear)"
             
             monthLength = lastDay(ofMonth: selectedMonth, year: selectedYear)
 
-            print(monthLength, "MONTHLENGTH!")
 
             
             backBtn.addTarget(self, action: #selector(backbuttonTouched(sender:)), for: .touchUpInside)
@@ -172,21 +170,22 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
   
         if fromCalendar {
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(selectedYear)\(selectedMonth.addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", selectedSong: cellItem.song!)
+                cell.setData(isToday: false, date: "\((indexPath.row + 1).ordinal)", selectedSong: cellItem.song!)
+                
                 cell.emptyLb.isHidden = true
 
             }else{
-                cell.setData(isToday: false, date: "\(indexPath.row + 1)일", selectedSong: nil)
+                cell.setData(isToday: false, date: "\((indexPath.row + 1).ordinal)", selectedSong: nil)
                 cell.emptyLb.isHidden = false
 
             }
         }else{
             if let cellItem = monthlyDiaries.filter({$0.id.contains("\(calendar.year!)\((calendar.month!).addZero())\((indexPath.row + 1).addZero())")}).first {
-                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", selectedSong: cellItem.song!)
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\((indexPath.row + 1).ordinal)", selectedSong: cellItem.song!)
                 cell.emptyLb.isHidden = true
 
             }else{
-                cell.setData(isToday: indexPath.row == calendar.day! - 1, date: "\(indexPath.row + 1)일", selectedSong: nil)
+                cell.setData(isToday: indexPath.row == calendar.day! - 1, date:"\((indexPath.row + 1).ordinal)", selectedSong: nil)
                 cell.emptyLb.isHidden = false
                 
             }
@@ -214,7 +213,7 @@ extension MainViewController:UICollectionViewDataSource, UICollectionViewDelegat
             vc.dateId = selectedId
         }
         
-        vc.dateLb.text = "\(dateLb.text!) \(indexPath.row + 1)일"
+        vc.dateLb.text = "\((indexPath.row + 1).ordinal) \(dateLb.text!)"
         
         if let written = realm.objects(Diary.self).filter({$0.id == selectedId}).first {
 
@@ -327,14 +326,12 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.leading.equalTo(10)
         }
         
-        titleLb.text = "제목"
         titleLb.numberOfLines = 1
         titleLb.adjustsFontSizeToFitWidth = true
         artistLb.adjustsFontSizeToFitWidth = true
         titleLb.textAlignment = .center
         artistLb.textAlignment = .center
         artistLb.numberOfLines = 1
-        artistLb.text = "이름"
         
         titleLb.isHidden = true
         artistLb.isHidden = true
@@ -354,7 +351,7 @@ class ScCollectionViewCell:UICollectionViewCell {
         }
         
         emptyLb.textAlignment = .center
-        emptyLb.text = "오늘의 음악을\n기록하세요"
+        emptyLb.text = "EmptyLabel".localized
         emptyLb.numberOfLines = 0
         emptyLb.font = UIFont.montserratBold(15)
         
@@ -382,4 +379,26 @@ extension Int {
             return "\(self)"
         }
     }
+}
+
+extension Int {
+    
+    var ordinal: String {
+        var suffix: String
+        let ones: Int = self % 10
+        let tens: Int = (self/10) % 10
+        if tens == 1 {
+            suffix = "th"
+        } else if ones == 1 {
+            suffix = "st"
+        } else if ones == 2 {
+            suffix = "nd"
+        } else if ones == 3 {
+            suffix = "rd"
+        } else {
+            suffix = "th"
+        }
+        return "\(self)\(suffix)"
+    }
+    
 }

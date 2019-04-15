@@ -22,6 +22,7 @@
 		23ACB11C2256FD9800889366 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACB11B2256FD9800889366 /* FontExtension.swift */; };
 		23ACB123225C439C00889366 /* 2671-sound-visualizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB122225C439C00889366 /* 2671-sound-visualizer.json */; };
 		23ACB19D2264552100889366 /* Free_Sample_By_Wix.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB19C2264552100889366 /* Free_Sample_By_Wix.jpg */; };
+		23ACB1A222645E4F00889366 /* Localized.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1A422645E4F00889366 /* Localized.strings */; };
 		23CC8B7022408CAC0036A120 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8B6F22408CAC0036A120 /* AppDelegate.swift */; };
 		23CC8B7722408CAE0036A120 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23CC8B7622408CAE0036A120 /* Assets.xcassets */; };
 		23CC8B7A22408CAE0036A120 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23CC8B7822408CAE0036A120 /* LaunchScreen.storyboard */; };
@@ -84,6 +85,8 @@
 		23ACB11B2256FD9800889366 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		23ACB122225C439C00889366 /* 2671-sound-visualizer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2671-sound-visualizer.json"; sourceTree = "<group>"; };
 		23ACB19C2264552100889366 /* Free_Sample_By_Wix.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Free_Sample_By_Wix.jpg; sourceTree = "<group>"; };
+		23ACB1A322645E4F00889366 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localized.strings; sourceTree = "<group>"; };
+		23ACB1A522645E5F00889366 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localized.strings; sourceTree = "<group>"; };
 		23CC8B6C22408CAC0036A120 /* Mument.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mument.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23CC8B6F22408CAC0036A120 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23CC8B7622408CAE0036A120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 				23CC8BAE2240952E0036A120 /* CalendarViewController.swift */,
 				23CC8BB0224095330036A120 /* ConfigViewController.swift */,
 				23CC8B9D22408F4D0036A120 /* MainViewController.swift */,
+				23ACB1A422645E4F00889366 /* Localized.strings */,
 				23ACB19C2264552100889366 /* Free_Sample_By_Wix.jpg */,
 				23CC8BBA2248BC390036A120 /* MusicSelectViewController.swift */,
 				23ACB1002256F39600889366 /* 4906-lady-guitar-player.json */,
@@ -372,6 +376,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 23CC8B6322408CAC0036A120;
 			productRefGroup = 23CC8B6D22408CAC0036A120 /* Products */;
@@ -390,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23ACB1A222645E4F00889366 /* Localized.strings in Resources */,
 				23ACB1152256FD2100889366 /* Montserrat-Light.ttf in Resources */,
 				23CC8B7A22408CAE0036A120 /* LaunchScreen.storyboard in Resources */,
 				23ACB1012256F39600889366 /* 4906-lady-guitar-player.json in Resources */,
@@ -598,6 +604,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		23ACB1A422645E4F00889366 /* Localized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				23ACB1A322645E4F00889366 /* en */,
+				23ACB1A522645E5F00889366 /* ko */,
+			);
+			name = Localized.strings;
+			sourceTree = "<group>";
+		};
 		23CC8B7822408CAE0036A120 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

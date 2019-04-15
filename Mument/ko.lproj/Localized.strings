@@ -1,0 +1,27 @@
+/* 
+  Localized.strings
+  Mument
+
+  Created by Seongchan Kang on 15/04/2019.
+  Copyright © 2019 seongchan. All rights reserved.
+*/
+"slogan" = "음악과 함께하는 순간";
+"askDeveloper" = "개발자에게 문의하기";
+"versionInfo" = "버전 정보";
+"warning" = "잠시만요!";
+"warningInfo" = "오늘의 음악을 선택해주세요";
+"confirm" = "확인";
+"EmptyLabel" = "오늘의 음악을 \n 기록하세요";
+"Jan" = "Jan";
+"Feb" = "Feb";
+"Mar" = "Mar";
+"Apr" = "Apr";
+"May" = "May";
+"Jun" = "Jun";
+"Jul" = "Jul";
+"Aug" = "Aug";
+"Sep" = "Sep";
+"Oct" = "Oct";
+"Nov" = "Nov";
+"Dec" = "Dec";
+"config" = "설정";

@@ -16,7 +16,7 @@ class ConfigViewController: UIViewController {
     
     typealias ConfigTuple = (image:UIImage, title:String, desc:String)
     
-    let menuTuples:[ConfigTuple] = [(image:UIImage.init(named: "envelope")!, title:"개발자에게 건의/문의하기", ""), (image:UIImage.init(named: "information")!, title:"버전 정보", "V 1.0")]
+    let menuTuples:[ConfigTuple] = [(image:UIImage.init(named: "envelope")!, title:"askDeveloper".localized, ""), (image:UIImage.init(named: "information")!, title:"versionInfo".localized, "V 1.0")]
     
 
     override func viewDidLoad() {
@@ -38,7 +38,7 @@ class ConfigViewController: UIViewController {
             make.top.equalTo(view.safeArea.top).offset(10)
         }
         
-        titleLb.text = "설정"
+        titleLb.text = "config".localized
         titleLb.font = UIFont.notoMedium(18)
         
         tableView.snp.makeConstraints { (make) in

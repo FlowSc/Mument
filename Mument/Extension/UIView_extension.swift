@@ -315,3 +315,12 @@ enum AmericanTypeWriterFontSize:String {
     case light = "AmericanTypewriter-Light"
     
 }
+
+extension String {
+
+    
+    var localized: String {
+        return NSLocalizedString(self, tableName: "Localized", value: "**\(self)**", comment: "")
+    }
+
+}

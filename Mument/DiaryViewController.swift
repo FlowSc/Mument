@@ -86,20 +86,10 @@ class DiaryViewController: UIViewController {
         }
     }
     
-    private func localPusicPlay(song:Song) {
-//        systemMusicPlayer
-//        appMusicPlayer
-//        systemMusicPlayer.setQueue(with: song.localItem!)
-    
-//        appMusicPlayer.setQueue(with: song.localItem.)
-        
-        
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print(selectedSong)
     }
     
     private func setNotifications() {
@@ -189,8 +179,8 @@ class DiaryViewController: UIViewController {
         
         guard let _selectedSong = selectedSong else {
             
-            let alertVc = UIAlertController.init(title: "잠깐만요!", message: "오늘의 음악을 선택해주세요!", preferredStyle: .alert)
-            let cancelAction = UIAlertAction.init(title: "확인", style: .cancel, handler: nil)
+            let alertVc = UIAlertController.init(title: "warning".localized, message: "warningInfo".localized, preferredStyle: .alert)
+            let cancelAction = UIAlertAction.init(title: "confirm".localized, style: .cancel, handler: nil)
             
             alertVc.addAction(cancelAction)
             

@@ -33,7 +33,7 @@ class CalendarViewController: UIViewController {
         collectionViewLayout.sectionInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
         
         if let currentYear = Calendar.current.dateComponents([.year], from: Date()).year {
-            yearBtn.setTitle("\(currentYear) 년", for: .normal)
+            yearBtn.setTitle("\(currentYear)", for: .normal)
             selectedYear = currentYear
         }
         
@@ -77,7 +77,6 @@ class CalendarViewController: UIViewController {
         yearBtn.addTarget(self, action: #selector(callPickerView(sender:)), for: .touchUpInside)
 
         yearBtn.shadow()
-//        pickerView.font
         yearBtn.backgroundColor = .cellBrown
 //
     }
@@ -100,9 +99,6 @@ extension CalendarViewController:UIPickerViewDelegate, UIPickerViewDataSource {
         return 50
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return "\(2019 + row) 년"
-//    }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
@@ -111,7 +107,7 @@ extension CalendarViewController:UIPickerViewDelegate, UIPickerViewDataSource {
         lbl.font = UIFont.notoMedium(20)
         lbl.textAlignment = .center
         
-        lbl.text = "\(2019 + row) 년"
+        lbl.text = "\(2019 + row)"
         
         return lbl
         
@@ -120,7 +116,7 @@ extension CalendarViewController:UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedYear = 2019 + row
-        yearBtn.setTitle("\(2019 + row) 년", for: .normal)
+        yearBtn.setTitle("\(2019 + row)", for: .normal)
     }
     
     
@@ -136,7 +132,7 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MonthCollectionViewCell", for: indexPath) as! MonthCollectionViewCell
         
-        cell.setMonth(indexPath.row + 1)
+        cell.setMonth(indexPath.row)
   
         
         return cell
@@ -171,6 +167,7 @@ extension CalendarViewController:UICollectionViewDataSource, UICollectionViewDel
 class MonthCollectionViewCell:UICollectionViewCell {
     
     private let lbl = UILabel()
+    private let months:[String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -191,7 +188,9 @@ class MonthCollectionViewCell:UICollectionViewCell {
     }
     
     func setMonth(_ month:Int) {
-        self.lbl.text = "\(month)월"
+        
+        self.lbl.text = months[month].localized
+
     }
     
     required init?(coder aDecoder: NSCoder) {
