@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23ACB0FF2256F32C00889366 /* 5271-loading-4.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB0FE2256F32C00889366 /* 5271-loading-4.json */; };
 		23ACB1012256F39600889366 /* 4906-lady-guitar-player.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1002256F39600889366 /* 4906-lady-guitar-player.json */; };
-		23ACB1032256F3EB00889366 /* 2881-music-fly.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1022256F3EB00889366 /* 2881-music-fly.json */; };
 		23ACB1052256F5BD00889366 /* 398-snap-loader-white.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1042256F5BD00889366 /* 398-snap-loader-white.json */; };
 		23ACB1072256F65A00889366 /* LottieLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACB1062256F65A00889366 /* LottieLoadingView.swift */; };
 		23ACB1122256FD2100889366 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1092256FD2100889366 /* Montserrat-Medium.ttf */; };
@@ -22,7 +20,6 @@
 		23ACB1192256FD2100889366 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1102256FD2100889366 /* Montserrat-SemiBold.ttf */; };
 		23ACB11A2256FD2100889366 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB1112256FD2100889366 /* Montserrat-Regular.ttf */; };
 		23ACB11C2256FD9800889366 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ACB11B2256FD9800889366 /* FontExtension.swift */; };
-		23ACB120225727CD00889366 /* music.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB11F225727CD00889366 /* music.json */; };
 		23ACB123225C439C00889366 /* 2671-sound-visualizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 23ACB122225C439C00889366 /* 2671-sound-visualizer.json */; };
 		23CC8B7022408CAC0036A120 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC8B6F22408CAC0036A120 /* AppDelegate.swift */; };
 		23CC8B7722408CAE0036A120 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23CC8B7622408CAE0036A120 /* Assets.xcassets */; };
@@ -71,9 +68,7 @@
 
 /* Begin PBXFileReference section */
 		0AE9E30C1922A8783C722E81 /* Pods-MumentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MumentTests.debug.xcconfig"; path = "Target Support Files/Pods-MumentTests/Pods-MumentTests.debug.xcconfig"; sourceTree = "<group>"; };
-		23ACB0FE2256F32C00889366 /* 5271-loading-4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "5271-loading-4.json"; sourceTree = "<group>"; };
 		23ACB1002256F39600889366 /* 4906-lady-guitar-player.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "4906-lady-guitar-player.json"; sourceTree = "<group>"; };
-		23ACB1022256F3EB00889366 /* 2881-music-fly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2881-music-fly.json"; sourceTree = "<group>"; };
 		23ACB1042256F5BD00889366 /* 398-snap-loader-white.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "398-snap-loader-white.json"; sourceTree = "<group>"; };
 		23ACB1062256F65A00889366 /* LottieLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieLoadingView.swift; sourceTree = "<group>"; };
 		23ACB1092256FD2100889366 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
@@ -86,7 +81,6 @@
 		23ACB1102256FD2100889366 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		23ACB1112256FD2100889366 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		23ACB11B2256FD9800889366 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
-		23ACB11F225727CD00889366 /* music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = music.json; sourceTree = "<group>"; };
 		23ACB122225C439C00889366 /* 2671-sound-visualizer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2671-sound-visualizer.json"; sourceTree = "<group>"; };
 		23CC8B6C22408CAC0036A120 /* Mument.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mument.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23CC8B6F22408CAC0036A120 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -205,11 +199,8 @@
 				23ACB1002256F39600889366 /* 4906-lady-guitar-player.json */,
 				23CC8BCA2255CFE60036A120 /* WelcomeViewController.swift */,
 				23ACB122225C439C00889366 /* 2671-sound-visualizer.json */,
-				23ACB11F225727CD00889366 /* music.json */,
 				23ACB1062256F65A00889366 /* LottieLoadingView.swift */,
-				23ACB0FE2256F32C00889366 /* 5271-loading-4.json */,
 				23ACB1042256F5BD00889366 /* 398-snap-loader-white.json */,
-				23ACB1022256F3EB00889366 /* 2881-music-fly.json */,
 				23CC8BBE2249CD6B0036A120 /* MusicDetailViewController.swift */,
 				23CC8BC42251E9780036A120 /* MusicTableViewCell.swift */,
 				23CC8BB22240B6AE0036A120 /* API.swift */,
@@ -399,18 +390,15 @@
 				23ACB1152256FD2100889366 /* Montserrat-Light.ttf in Resources */,
 				23CC8B7A22408CAE0036A120 /* LaunchScreen.storyboard in Resources */,
 				23ACB1012256F39600889366 /* 4906-lady-guitar-player.json in Resources */,
-				23ACB120225727CD00889366 /* music.json in Resources */,
 				23ACB11A2256FD2100889366 /* Montserrat-Regular.ttf in Resources */,
 				23ACB123225C439C00889366 /* 2671-sound-visualizer.json in Resources */,
 				23ACB1142256FD2100889366 /* NotoSans-Medium.otf in Resources */,
-				23ACB0FF2256F32C00889366 /* 5271-loading-4.json in Resources */,
 				23ACB1132256FD2100889366 /* NotoSans-Bold.otf in Resources */,
 				23ACB1162256FD2100889366 /* Montserrat-ExtraLight.ttf in Resources */,
 				23ACB1182256FD2100889366 /* NotoSans-Regular.otf in Resources */,
 				23ACB1122256FD2100889366 /* Montserrat-Medium.ttf in Resources */,
 				23ACB1172256FD2100889366 /* Montserrat-Bold.ttf in Resources */,
 				23ACB1192256FD2100889366 /* Montserrat-SemiBold.ttf in Resources */,
-				23ACB1032256F3EB00889366 /* 2881-music-fly.json in Resources */,
 				23CC8B7722408CAE0036A120 /* Assets.xcassets in Resources */,
 				23ACB1052256F5BD00889366 /* 398-snap-loader-white.json in Resources */,
 			);

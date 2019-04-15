@@ -243,6 +243,8 @@ class ScCollectionViewCell:UICollectionViewCell {
     private let todayIndicatorLb = UILabel()
     private let dateLb = UILabel()
     private let imageView = UIImageView()
+    private let titleLb = UILabel()
+    private let artistLb = UILabel()
     let emptyLb = UILabel()
     
     
@@ -265,11 +267,24 @@ class ScCollectionViewCell:UICollectionViewCell {
         
         
         if let _selected = selectedSong {
+            
+            artistLb.isHidden = false
+            titleLb.isHidden = false
+            
+            artistLb.text = _selected.artistName
+            titleLb.text = _selected.title
+            
+            artistLb.font = UIFont.notoMedium(15)
+            titleLb.font = UIFont.notoMedium(18)
+            
             if _selected.artworkUrl != "" {
                 imageView.kf.setImage(with: URL.init(string: _selected.artworkUrl))
             }else {
                 imageView.image = UIImage.init(data: _selected.localImage!)
             }
+        }else{
+            artistLb.isHidden = true
+            titleLb.isHidden = true
         }
         
 //
@@ -279,7 +294,7 @@ class ScCollectionViewCell:UICollectionViewCell {
      
         self.setBorder(color: .clear, width: 0.5, cornerRadius: 5)
         self.dropShadow(color: .black, offSet: CGSize.init(width: 5, height: 5))
-        self.addSubview([todayIndicatorLb, dateLb, imageView, emptyLb])
+        self.addSubview([todayIndicatorLb, dateLb, imageView, titleLb, artistLb, emptyLb])
         
         todayIndicatorLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
@@ -298,6 +313,31 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.top.equalTo(dateLb.snp.bottom).offset(10)
             make.leading.equalTo(10)
             make.centerX.equalToSuperview()
+//            make.bottom.equalTo(-10)
+        }
+        
+        titleLb.snp.makeConstraints { (make) in
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.leading.equalTo(10)
+        }
+        
+        titleLb.text = "제목"
+        titleLb.numberOfLines = 1
+        titleLb.adjustsFontSizeToFitWidth = true
+        artistLb.adjustsFontSizeToFitWidth = true
+        titleLb.textAlignment = .center
+        artistLb.textAlignment = .center
+        artistLb.numberOfLines = 1
+        artistLb.text = "이름"
+        
+        titleLb.isHidden = true
+        artistLb.isHidden = true
+
+        artistLb.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLb.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+            make.leading.equalTo(10)
             make.bottom.equalTo(-10)
         }
         

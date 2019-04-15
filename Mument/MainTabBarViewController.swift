@@ -84,20 +84,18 @@ class MainTabBarViewController: UITabBarController {
         }
         
         searchBtn.setImage(UIImage.init(named: "calendar")?.imageWithColor(color1: .gray), for: .normal)
-        mainBtn.setImage(UIImage.init(named: "bookmark")?.imageWithColor(color1: .gray), for: .normal)
-        configBtn.setImage(UIImage.init(named: "menu")?.imageWithColor(color1: .gray), for: .normal)
+        mainBtn.setImage(UIImage.init(named: "home")?.imageWithColor(color1: .gray), for: .normal)
+        configBtn.setImage(UIImage.init(named: "settings-1")?.imageWithColor(color1: .gray), for: .normal)
         
         searchBtn.setImage(UIImage.init(named: "calendar")?.imageWithColor(color1: .black), for: .selected)
-        mainBtn.setImage(UIImage.init(named: "bookmark")?.imageWithColor(color1: .black), for: .selected)
-        configBtn.setImage(UIImage.init(named: "menu")?.imageWithColor(color1: .black), for: .selected)
+        mainBtn.setImage(UIImage.init(named: "home")?.imageWithColor(color1: .black), for: .selected)
+        configBtn.setImage(UIImage.init(named: "settings-1")?.imageWithColor(color1: .black), for: .selected)
     }
     
     @objc func setAction(sender:UIButton) {
         
         _ = [searchBtn, mainBtn, configBtn].map({$0.isSelected = false})
-        
-        print(sender)
-        
+                
         sender.isSelected = true
         
         self.selectedIndex = sender.tag
@@ -107,7 +105,7 @@ class MainTabBarViewController: UITabBarController {
 
 extension UIButton {
     func setImageEdge() {
-        self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 40, bottom: 10, right: 40)
+        self.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 50, bottom: 10, right: 50)
     }
 }
 
