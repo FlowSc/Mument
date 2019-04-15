@@ -145,7 +145,8 @@ class MainViewController: UIViewController {
         let calendar = Calendar.current.dateComponents([.month, .day, .year, .weekday], from: currentDate)
         
         if !fromCalendar {
-                    collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+            collectionView.scrollToItem(at: IndexPath.init(row: calendar.day! - 1, section: 0), at: UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+            collectionView.reloadData()
         }
     
     }
@@ -311,20 +312,20 @@ class ScCollectionViewCell:UICollectionViewCell {
         
         dateLb.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(todayIndicatorLb.snp.bottom).offset(10)
+            make.top.equalTo(40)
+            make.height.equalTo(25)
         }
         imageView.snp.makeConstraints { (make) in
             make.top.equalTo(dateLb.snp.bottom).offset(10)
             make.leading.equalTo(10)
+            make.height.equalToSuperview().multipliedBy(0.6)
             make.centerX.equalToSuperview()
 //            make.bottom.equalTo(-10)
         }
         
-        titleLb.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-            make.leading.equalTo(10)
-        }
+        imageView.contentMode = .scaleToFill
+        
+
         
         titleLb.numberOfLines = 1
         titleLb.adjustsFontSizeToFitWidth = true
@@ -340,7 +341,13 @@ class ScCollectionViewCell:UICollectionViewCell {
             make.top.equalTo(titleLb.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
             make.leading.equalTo(10)
-            make.bottom.equalTo(-10)
+            make.bottom.equalTo(-15)
+        }
+        
+        titleLb.snp.makeConstraints { (make) in
+            make.bottom.equalTo(artistLb.snp.top).offset(-15)
+            make.centerX.equalToSuperview()
+            make.leading.equalTo(10)
         }
         
         imageView.setBorder(color: UIColor.clear, width: 0.5, cornerRadius: 3)
@@ -355,7 +362,7 @@ class ScCollectionViewCell:UICollectionViewCell {
         emptyLb.numberOfLines = 0
         emptyLb.font = UIFont.montserratBold(15)
         
-        imageView.contentMode = .scaleToFill
+
         
     }
     
