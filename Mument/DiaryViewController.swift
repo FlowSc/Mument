@@ -199,9 +199,13 @@ class DiaryViewController: UIViewController {
 
             try! realm.write {
                 
+            
                 
                 if let old = _diary.song {
-                    realm.delete(old)
+                    
+                    if old.title != _selectedSong.title {
+                        realm.delete(old)
+                    }
                 }
 
                 _diary.contents = diaryTv.text
