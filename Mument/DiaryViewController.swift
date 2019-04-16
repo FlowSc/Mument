@@ -25,12 +25,8 @@ class DiaryViewController: UIViewController {
     var selectedSong:Song? {
         didSet {
             if let _selected = selectedSong {
-                
-                
                     appleMusicPlayId(_selected)
                     musicPlayerView.setMusicPlayer(song: _selected)
-
-            
             
             }
         }
@@ -46,6 +42,8 @@ class DiaryViewController: UIViewController {
     let musicPlayerView = MusicPlayerView()
     let backBtn = UIButton()
     let keyboardResigner = UITapGestureRecognizer()
+    let keyboardResigner2 = UITapGestureRecognizer()
+
     var dateId:String = ""
     
     
@@ -120,8 +118,11 @@ class DiaryViewController: UIViewController {
             make.centerY.equalTo(backBtn.snp.centerY)
             make.centerX.equalToSuperview()
         }
+        verticalScrollView.contentView.addGestureRecognizer(keyboardResigner2)
+        keyboardResigner2.addTarget(self, action: #selector(keyboardResignTouched))
+
         musicPlayerView.addGestureRecognizer(keyboardResigner)
-//        dateLb.addGestureRecognizer(keyboardResigner)
+
         keyboardResigner.addTarget(self, action: #selector(keyboardResignTouched))
         
         musicPlayerView.delegate = self
@@ -133,6 +134,7 @@ class DiaryViewController: UIViewController {
         spacing.alignment = .left
         diaryTv.typingAttributes = [NSAttributedString.Key.paragraphStyle:spacing, NSAttributedString.Key.font : UIFont.notoMedium(13)]
         
+
         diaryTv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
             make.centerX.equalToSuperview()
@@ -155,9 +157,8 @@ class DiaryViewController: UIViewController {
         }
         addBtn.setImage(UIImage.init(named: "edit"), for: .normal)
         diaryTv.backgroundColor = .backgroundBrown
-//
+        
         musicPlayerView.shadow()
-//
         diaryTv.shadow()
 
         dateLb.textColor = .black
