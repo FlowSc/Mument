@@ -19,7 +19,7 @@ class DiaryViewController: UIViewController {
     
     let musicPicker = MPMediaPickerController.init(mediaTypes: .anyAudio)
     
-    let appMusicPlayer = MPMusicPlayerController.applicationMusicPlayer
+    let appMusicPlayer = MusicPlayer.shared
     var avPlayer:AVPlayer?
     
     var selectedSong:Song? {
@@ -77,6 +77,7 @@ class DiaryViewController: UIViewController {
             if let url = URL.init(string: song.url) {
                 let playItem = AVPlayerItem.init(url: url)
                 avPlayer = AVPlayer.init(playerItem: playItem)
+                
 
             }else{
                 if let localSong = findSongWithPersistentIdString(persistentIDString: song.id) {
@@ -243,6 +244,7 @@ class DiaryViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         avPlayer = nil
+        musicPlayerView.musicStatus(false)
         appMusicPlayer.stop()
     }
     
@@ -442,6 +444,17 @@ class MusicPlayerView:UIView {
     @objc func addMusicTouched(sender:UIButton) {
         delegate?.addMusic()
     }
+    
+    func musicStatus(_ bool:Bool) {
+        
+        playBtn.isSelected = bool
+        if bool {
+            musicAnimView.play()
+        }else{
+            musicAnimView.stop()
+        }
+    }
+    
     @objc func playMusic(sender:UIButton) {
         sender.isSelected = !(sender.isSelected)
         delegate?.play(isSelected: sender.isSelected)
