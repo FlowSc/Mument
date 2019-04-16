@@ -197,24 +197,15 @@ class DiaryViewController: UIViewController {
         
         if let _diary = diary {
 
-            
-            
             try! realm.write {
                 
-                print(_diary.song)
                 
                 if let old = _diary.song {
                     realm.delete(old)
                 }
-                print(_diary.song)
 
-                print("~~~~~~")
-                
                 _diary.contents = diaryTv.text
                 _diary.song = _selectedSong
-                
-                print(_diary.song)
-                print("NEWNEW")
                 _diary.id = dateId
                 self.navigationController?.popToRootViewController(animated: true)
             }
@@ -238,11 +229,11 @@ class DiaryViewController: UIViewController {
     @objc func keyboardResign(noti:Notification) {
         if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
-            if DEVICEWINDOW.height < 600 {
+//            if DEVICEWINDOW.height < 600 {
                 if self.view.frame.origin.y != 0 {
                     self.view.frame.origin.y += 100
                 }
-            }
+//            }/
 
         }
     }
@@ -250,12 +241,12 @@ class DiaryViewController: UIViewController {
     @objc func keyboardBegin(noti:Notification) {
         if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("notification: Keyboard will show")
-            if DEVICEWINDOW.height < 600 {
+//            if DEVICEWINDOW.height < 600 {
 
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= 100
                 }
-            }
+//            }
         }
     }
     
@@ -356,6 +347,8 @@ class MusicPlayerView:UIView {
     private let repeatModeBtn = UIButton()
     private let titleLb = UILabel()
     private let artistLb = UILabel()
+    private let albumLb = UILabel()
+
     private let musicAnimView = LOTAnimationView.init(name: "2671-sound-visualizer")
     
     var isFirstAdd:Bool = true
@@ -387,7 +380,7 @@ class MusicPlayerView:UIView {
         firstAddBtn.removeFromSuperview()
         firstAddInfoLb.removeFromSuperview()
         
-        self.addSubview([thumnailImv, playBtn, titleLb, artistLb, firstAddBtn, musicAnimView])
+        self.addSubview([thumnailImv, playBtn, titleLb, artistLb, firstAddBtn, musicAnimView, albumLb])
         
         thumnailImv.snp.makeConstraints { (make) in
             make.leading.equalTo(10)
@@ -407,6 +400,12 @@ class MusicPlayerView:UIView {
         
         artistLb.snp.makeConstraints { (make) in
             make.top.equalTo(titleLb.snp.bottom).offset(5)
+            make.leading.equalTo(titleLb.snp.leading)
+            make.trailing.equalTo(-10)
+        }
+        
+        albumLb.snp.makeConstraints { (make) in
+            make.top.equalTo(artistLb.snp.bottom).offset(5)
             make.leading.equalTo(titleLb.snp.leading)
             make.trailing.equalTo(-10)
         }
@@ -450,6 +449,8 @@ class MusicPlayerView:UIView {
         titleLb.text = song.title
         artistLb.font = UIFont.notoMedium(12)
         artistLb.text = song.artistName
+        albumLb.font = UIFont.notoMedium(12)
+        albumLb.text = song.albumName
         
             if song.artworkUrl != "" {
                 thumnailImv.kf.setImage(with: URL.init(string: song.artworkUrl))
@@ -458,7 +459,7 @@ class MusicPlayerView:UIView {
                 if let imageData = song.localImage {
                     thumnailImv.image = UIImage.init(data: imageData)
                 }else{
-                    thumnailImv.image = UIImage()
+                    thumnailImv.image = UIImage.init(named: "defaultAlbum")
                 }
             }
 

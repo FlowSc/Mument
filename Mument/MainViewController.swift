@@ -275,7 +275,8 @@ class ScCollectionViewCell:UICollectionViewCell {
             titleLb.text = _selected.title
             
             artistLb.font = UIFont.notoMedium(15)
-            titleLb.font = UIFont.notoMedium(18)
+            titleLb.font = UIFont.notoMedium(20)
+            artistLb.textColor = .gray
             
             if _selected.artworkUrl != "" {
                 imageView.kf.setImage(with: URL.init(string: _selected.artworkUrl))
@@ -283,7 +284,7 @@ class ScCollectionViewCell:UICollectionViewCell {
                 if let imageData = _selected.localImage {
                     imageView.image = UIImage.init(data: imageData)
                 }else{
-                    imageView.image = UIImage()
+                    imageView.image = UIImage.init(named: "defaultAlbum")
                 }
                 
             }
@@ -338,7 +339,7 @@ class ScCollectionViewCell:UICollectionViewCell {
         artistLb.isHidden = true
 
         artistLb.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLb.snp.bottom).offset(5)
+            make.top.equalTo(titleLb.snp.bottom).offset(3)
             make.centerX.equalToSuperview()
             make.leading.equalTo(10)
             make.bottom.equalTo(-15)
