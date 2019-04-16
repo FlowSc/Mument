@@ -58,7 +58,6 @@ class Song:Object, Mappable {
     @objc dynamic var lastPlayedDate:Date?
     @objc dynamic var isPlaybackId:Bool = false
     
-    var localItem:MPMediaItem?
     @objc dynamic var localImage:Data?
     
     func mapping(map: Map) {
@@ -78,8 +77,6 @@ class Song:Object, Mappable {
     convenience init(item:MPMediaItem) {
         self.init()
         
-        self.localItem = item
-
         self.artistName = item.artist ?? ""
         self.title = item.title ?? ""
         self.url = item.assetURL?.absoluteString ?? ""

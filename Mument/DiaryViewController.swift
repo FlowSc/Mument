@@ -121,7 +121,9 @@ class DiaryViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         musicPlayerView.addGestureRecognizer(keyboardResigner)
+//        dateLb.addGestureRecognizer(keyboardResigner)
         keyboardResigner.addTarget(self, action: #selector(keyboardResignTouched))
+        
         musicPlayerView.delegate = self
         
         dateLb.font = UIFont.notoMedium(18)
@@ -195,9 +197,24 @@ class DiaryViewController: UIViewController {
         
         if let _diary = diary {
 
+            
+            
             try! realm.write {
+                
+                print(_diary.song)
+                
+                if let old = _diary.song {
+                    realm.delete(old)
+                }
+                print(_diary.song)
+
+                print("~~~~~~")
+                
                 _diary.contents = diaryTv.text
                 _diary.song = _selectedSong
+                
+                print(_diary.song)
+                print("NEWNEW")
                 _diary.id = dateId
                 self.navigationController?.popToRootViewController(animated: true)
             }
@@ -220,17 +237,24 @@ class DiaryViewController: UIViewController {
     
     @objc func keyboardResign(noti:Notification) {
         if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += 100
+            
+            if DEVICEWINDOW.height < 600 {
+                if self.view.frame.origin.y != 0 {
+                    self.view.frame.origin.y += 100
+                }
             }
+
         }
     }
     
     @objc func keyboardBegin(noti:Notification) {
         if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("notification: Keyboard will show")
+            if DEVICEWINDOW.height < 600 {
+
             if self.view.frame.origin.y == 0{
                 self.view.frame.origin.y -= 100
+                }
             }
         }
     }
@@ -290,7 +314,6 @@ extension DiaryViewController:MPMediaPickerControllerDelegate {
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        print(mediaItemCollection)
         
         if let media = mediaItemCollection.items.first {
             
