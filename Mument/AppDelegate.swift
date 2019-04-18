@@ -30,8 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = rootTabVc
 
         }else{
-            window?.rootViewController = rootTabVc
-
+            window?.rootViewController = rootVc
         }
 
         
